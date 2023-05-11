@@ -1,0 +1,46 @@
+add.d $f0, $f2
+add.s $f1, $f2
+add/sub/and/or/nor/xor $t0, $s2, $t0
+addi/andi/ori/xori $t2, $t3, -10
+addiu $t1, $t2, $t3
+addu/subu $t1, $t2, $t3
+beq/bne $t1, $zero, LABEL
+bgez $t1, LABEL
+bgezal $t1, LABEL
+c.eq.d $f2, $f4
+c.eq.s $f0, $f1
+clo $t1, $t2
+div $t1, $t2
+div.d $f2, $f4, $f6
+div.s $f0, $f1, $f2
+j LABEL
+jal LABEL
+jalr $t1
+jr $t0
+lb $t1, 100($t2)
+lh/lhu $t1, -100($t2)
+li $t1, XX (incluindo na forma de pseudoinstrução)
+lui $t1, 0xXXXX
+lw $t0, OFFSET($s3)
+madd $t1, $t2
+mfhi/mflo $t1
+movn $t1, $t2, $t3
+msubu $t1, $t2
+mul $t1, $t2, $t5
+mul.d $f2, $f4, $f6
+mul.s $f1, $f2, $f3
+mult $t1, $t2
+sb $t4, 1000($t2)
+sll/srl $t2, $t3, 10
+slt $t1, $t2, $t3
+slti/sltu $t1, $t2, -100
+sra $t2, $t1, 10
+srav $t1, $t2, $t3
+sub.d $f2, $f4, $f6
+sub.s $f0, $f1, $f3
+sw $t0, OFFSET($s3)
+teq $t1, $t2
+tge $t1, $t2
+tgei/u $t1, -100
+tne $t1, $t2
+tnei $t1, -100
