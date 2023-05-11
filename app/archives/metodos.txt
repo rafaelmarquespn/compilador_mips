@@ -1,0 +1,549 @@
+def add_d(self, registers:str):                        
+	opcode = "010001"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "000001"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def add_s(self, registers:str):                        
+	opcode = "010001"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "000000"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def add(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "100000"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def sub(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "100010"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def and(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "100100"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def or(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "100101"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def nor(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "100111"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def xor(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "100110"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def addi(self, registers:str):                        
+	opcode = "001000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "None"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def andi(self, registers:str):                        
+	opcode = "001100"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "None"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def ori(self, registers:str):                        
+	opcode = "001101"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "None"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def xori(self, registers:str):                        
+	opcode = "001110"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "None"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def addiu(self, registers:str):                        
+	opcode = "001001"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "None"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def addu(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "100001"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def subu(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "100011"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def beq(self, registers:str):                        
+	opcode = "000100"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "None"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def bne(self, registers:str):                        
+	opcode = "000101"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "None"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def bgez(self, registers:str):                        
+	opcode = "000001"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "000001"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def bgezal(self, registers:str):                        
+	opcode = "000001"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "100001"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def c_eq_d(self, registers:str):                        
+	opcode = "010001"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "101001"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def c_eq_s(self, registers:str):                        
+	opcode = "010001"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "101000"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def clo(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "100001"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def div(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "011010"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def div_d(self, registers:str):                        
+	opcode = "010001"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "111001"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def div_s(self, registers:str):                        
+	opcode = "010001"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "111000"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def j(self, registers:str):                        
+	opcode = "000010"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "None"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def jal(self, registers:str):                        
+	opcode = "000011"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "None"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def jalr(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "001001"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def jr(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "001000"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def lb(self, registers:str):                        
+	opcode = "100000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "None"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def lh(self, registers:str):                        
+	opcode = "100001"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "None"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def lhu(self, registers:str):                        
+	opcode = "100101"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "None"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def li(self, registers:str):                        
+	opcode = "001111"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "None"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def lui(self, registers:str):                        
+	opcode = "001111"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "None"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def lw(self, registers:str):                        
+	opcode = "100011"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "None"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def madd(self, registers:str):                        
+	opcode = "011100"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "None"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def mfhi(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "010000"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def mflo(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "010010"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def movn(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "001011"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def msubu(self, registers:str):                        
+	opcode = "011101"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "None"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def mul(self, registers:str):                        
+	opcode = "011100"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "None"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def mul_d(self, registers:str):                        
+	opcode = "010001"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "010010"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def mul_s(self, registers:str):                        
+	opcode = "010001"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "010000"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def mult(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "011000"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def sb(self, registers:str):                        
+	opcode = "101000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "None"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def sll(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "000000"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def srl(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "000010"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def slt(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "101010"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def slti(self, registers:str):                        
+	opcode = "001010"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "None"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def sltu(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "101011"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def sra(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "000011"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def srav(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "000111"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def sub_d(self, registers:str):                        
+	opcode = "010001"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "000011"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def sub_s(self, registers:str):                        
+	opcode = "010001"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "000010"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def sw(self, registers:str):                        
+	opcode = "101011"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "None"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def teq(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "110100"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def tge(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "110000"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def tgei(self, registers:str):                        
+	opcode = "000001"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "010000"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def u(self, registers:str):                        
+	opcode = "000000"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "110001"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def tne(self, registers:str):                        
+	opcode = "00001"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "01000"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+
+def tnei(self, registers:str):                        
+	opcode = "000001"                        
+	rs = ""                        
+	rt = ""                        
+	rd = ""                        
+	shamt = ""                        
+	funct = "01001"                        
+	return hex(int((opcode + rs + rt + rd + shamt + func),2))
+

@@ -1,366 +1,366 @@
-case 'add.d $f0, $f2':
-	registers = i.split()[1]
+case 'add.d $f0, $f2':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.add_d $f0, $f2($f0, $f2)
+	traduction = translator.add.d($f0, $f2)                         
 	translated.append(traduction) 
 
-case 'add.s $f1, $f2':
-	registers = i.split()[1]
+case 'add.s $f1, $f2':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.add_s $f1, $f2($f1, $f2)
+	traduction = translator.add.s($f1, $f2)                         
 	translated.append(traduction) 
 
-case 'add $t0, $s2, $t0':
-	registers = i.split()[1]
+case 'add $t0, $s2, $t0':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.add $t0, $s2, $t0($t0, $s2, $t0)
+	traduction = translator.add($t0, $s2, $t0)                         
 	translated.append(traduction) 
 
-case 'sub $t0, $s2, $t0':
-	registers = i.split()[1]
+case 'sub $t0, $s2, $t0':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.sub $t0, $s2, $t0($t0, $s2, $t0)
+	traduction = translator.sub($t0, $s2, $t0)                         
 	translated.append(traduction) 
 
-case 'and $t0, $s2, $t0':
-	registers = i.split()[1]
+case 'and $t0, $s2, $t0':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.and $t0, $s2, $t0($t0, $s2, $t0)
+	traduction = translator.and($t0, $s2, $t0)                         
 	translated.append(traduction) 
 
-case 'or $t0, $s2, $t0':
-	registers = i.split()[1]
+case 'or $t0, $s2, $t0':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.or $t0, $s2, $t0($t0, $s2, $t0)
+	traduction = translator.or($t0, $s2, $t0)                         
 	translated.append(traduction) 
 
-case 'nor $t0, $s2, $t0':
-	registers = i.split()[1]
+case 'nor $t0, $s2, $t0':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.nor $t0, $s2, $t0($t0, $s2, $t0)
+	traduction = translator.nor($t0, $s2, $t0)                         
 	translated.append(traduction) 
 
-case 'xor $t0, $s2, $t0':
-	registers = i.split()[1]
+case 'xor $t0, $s2, $t0':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.xor $t0, $s2, $t0($t0, $s2, $t0)
+	traduction = translator.xor($t0, $s2, $t0)                         
 	translated.append(traduction) 
 
-case 'addi $t2, $t3, -10':
-	registers = i.split()[1]
+case 'addi $t2, $t3, -10':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.addi $t2, $t3, -10($t2, $t3, -10)
+	traduction = translator.addi($t2, $t3, -10)                         
 	translated.append(traduction) 
 
-case 'andi $t2, $t3, -10':
-	registers = i.split()[1]
+case 'andi $t2, $t3, -10':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.andi $t2, $t3, -10($t2, $t3, -10)
+	traduction = translator.andi($t2, $t3, -10)                         
 	translated.append(traduction) 
 
-case 'ori $t2, $t3, -10':
-	registers = i.split()[1]
+case 'ori $t2, $t3, -10':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.ori $t2, $t3, -10($t2, $t3, -10)
+	traduction = translator.ori($t2, $t3, -10)                         
 	translated.append(traduction) 
 
-case 'xori $t2, $t3, -10':
-	registers = i.split()[1]
+case 'xori $t2, $t3, -10':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.xori $t2, $t3, -10($t2, $t3, -10)
+	traduction = translator.xori($t2, $t3, -10)                         
 	translated.append(traduction) 
 
-case 'addiu $t1, $t2, $t3':
-	registers = i.split()[1]
+case 'addiu $t1, $t2, $t3':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.addiu $t1, $t2, $t3($t1, $t2, $t3)
+	traduction = translator.addiu($t1, $t2, $t3)                         
 	translated.append(traduction) 
 
-case 'addu $t1, $t2, $t3':
-	registers = i.split()[1]
+case 'addu $t1, $t2, $t3':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.addu $t1, $t2, $t3($t1, $t2, $t3)
+	traduction = translator.addu($t1, $t2, $t3)                         
 	translated.append(traduction) 
 
-case 'subu $t1, $t2, $t3':
-	registers = i.split()[1]
+case 'subu $t1, $t2, $t3':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.subu $t1, $t2, $t3($t1, $t2, $t3)
+	traduction = translator.subu($t1, $t2, $t3)                         
 	translated.append(traduction) 
 
-case 'beq $t1, $zero, LABEL':
-	registers = i.split()[1]
+case 'beq $t1, $zero, LABEL':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.beq $t1, $zero, LABEL($t1, $zero, LABEL)
+	traduction = translator.beq($t1, $zero, LABEL)                         
 	translated.append(traduction) 
 
-case 'bne $t1, $zero, LABEL':
-	registers = i.split()[1]
+case 'bne $t1, $zero, LABEL':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.bne $t1, $zero, LABEL($t1, $zero, LABEL)
+	traduction = translator.bne($t1, $zero, LABEL)                         
 	translated.append(traduction) 
 
-case 'bgez $t1, LABEL':
-	registers = i.split()[1]
+case 'bgez $t1, LABEL':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.bgez $t1, LABEL($t1, LABEL)
+	traduction = translator.bgez($t1, LABEL)                         
 	translated.append(traduction) 
 
-case 'bgezal $t1, LABEL':
-	registers = i.split()[1]
+case 'bgezal $t1, LABEL':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.bgezal $t1, LABEL($t1, LABEL)
+	traduction = translator.bgezal($t1, LABEL)                         
 	translated.append(traduction) 
 
-case 'c.eq.d $f2, $f4':
-	registers = i.split()[1]
+case 'c.eq.d $f2, $f4':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.c_eq_d $f2, $f4($f2, $f4)
+	traduction = translator.c.eq.d($f2, $f4)                         
 	translated.append(traduction) 
 
-case 'c.eq.s $f0, $f1':
-	registers = i.split()[1]
+case 'c.eq.s $f0, $f1':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.c_eq_s $f0, $f1($f0, $f1)
+	traduction = translator.c.eq.s($f0, $f1)                         
 	translated.append(traduction) 
 
-case 'clo $t1, $t2':
-	registers = i.split()[1]
+case 'clo $t1, $t2':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.clo $t1, $t2($t1, $t2)
+	traduction = translator.clo($t1, $t2)                         
 	translated.append(traduction) 
 
-case 'div $t1, $t2':
-	registers = i.split()[1]
+case 'div $t1, $t2':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.div $t1, $t2($t1, $t2)
+	traduction = translator.div($t1, $t2)                         
 	translated.append(traduction) 
 
-case 'div.d $f2, $f4, $f6':
-	registers = i.split()[1]
+case 'div.d $f2, $f4, $f6':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.div_d $f2, $f4, $f6($f2, $f4, $f6)
+	traduction = translator.div.d($f2, $f4, $f6)                         
 	translated.append(traduction) 
 
-case 'div.s $f0, $f1, $f2':
-	registers = i.split()[1]
+case 'div.s $f0, $f1, $f2':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.div_s $f0, $f1, $f2($f0, $f1, $f2)
+	traduction = translator.div.s($f0, $f1, $f2)                         
 	translated.append(traduction) 
 
-case 'j LABEL':
-	registers = i.split()[1]
+case 'j LABEL':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.j LABEL(LABEL)
+	traduction = translator.j(LABEL)                         
 	translated.append(traduction) 
 
-case 'jal LABEL':
-	registers = i.split()[1]
+case 'jal LABEL':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.jal LABEL(LABEL)
+	traduction = translator.jal(LABEL)                         
 	translated.append(traduction) 
 
-case 'jalr $t1':
-	registers = i.split()[1]
+case 'jalr $t1':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.jalr $t1($t1)
+	traduction = translator.jalr($t1)                         
 	translated.append(traduction) 
 
-case 'jr $t0':
-	registers = i.split()[1]
+case 'jr $t0':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.jr $t0($t0)
+	traduction = translator.jr($t0)                         
 	translated.append(traduction) 
 
-case 'lb $t1, 100($t2)':
-	registers = i.split()[1]
+case 'lb $t1, 100($t2)':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.lb $t1, 100($t2)($t1, 100($t2))
+	traduction = translator.lb($t1, 100($t2))                         
 	translated.append(traduction) 
 
-case 'lh $t1, -100($t2)':
-	registers = i.split()[1]
+case 'lh $t1, -100($t2)':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.lh $t1, -100($t2)($t1, -100($t2))
+	traduction = translator.lh($t1, -100($t2))                         
 	translated.append(traduction) 
 
-case 'lhu $t1, -100($t2)':
-	registers = i.split()[1]
+case 'lhu $t1, -100($t2)':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.lhu $t1, -100($t2)($t1, -100($t2))
+	traduction = translator.lhu($t1, -100($t2))                         
 	translated.append(traduction) 
 
-case 'li $t1, XX (incluindo na forma de pseudoinstrução)':
-	registers = i.split()[1]
+case 'li $t1, XX (incluindo na forma de pseudoinstrução)':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.li $t1, XX (incluindo na forma de pseudoinstrução)($t1, XX (incluindo na forma de pseudoinstrução))
+	traduction = translator.li($t1, XX (incluindo na forma de pseudoinstrução))                         
 	translated.append(traduction) 
 
-case 'lui $t1, 0xXXXX':
-	registers = i.split()[1]
+case 'lui $t1, 0xXXXX':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.lui $t1, 0xXXXX($t1, 0xXXXX)
+	traduction = translator.lui($t1, 0xXXXX)                         
 	translated.append(traduction) 
 
-case 'lw $t0, OFFSET($s3)':
-	registers = i.split()[1]
+case 'lw $t0, OFFSET($s3)':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.lw $t0, OFFSET($s3)($t0, OFFSET($s3))
+	traduction = translator.lw($t0, OFFSET($s3))                         
 	translated.append(traduction) 
 
-case 'madd $t1, $t2':
-	registers = i.split()[1]
+case 'madd $t1, $t2':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.madd $t1, $t2($t1, $t2)
+	traduction = translator.madd($t1, $t2)                         
 	translated.append(traduction) 
 
-case 'mfhi $t1':
-	registers = i.split()[1]
+case 'mfhi $t1':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.mfhi $t1($t1)
+	traduction = translator.mfhi($t1)                         
 	translated.append(traduction) 
 
-case 'mflo $t1':
-	registers = i.split()[1]
+case 'mflo $t1':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.mflo $t1($t1)
+	traduction = translator.mflo($t1)                         
 	translated.append(traduction) 
 
-case 'movn $t1, $t2, $t3':
-	registers = i.split()[1]
+case 'movn $t1, $t2, $t3':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.movn $t1, $t2, $t3($t1, $t2, $t3)
+	traduction = translator.movn($t1, $t2, $t3)                         
 	translated.append(traduction) 
 
-case 'msubu $t1, $t2':
-	registers = i.split()[1]
+case 'msubu $t1, $t2':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.msubu $t1, $t2($t1, $t2)
+	traduction = translator.msubu($t1, $t2)                         
 	translated.append(traduction) 
 
-case 'mul $t1, $t2, $t5':
-	registers = i.split()[1]
+case 'mul $t1, $t2, $t5':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.mul $t1, $t2, $t5($t1, $t2, $t5)
+	traduction = translator.mul($t1, $t2, $t5)                         
 	translated.append(traduction) 
 
-case 'mul.d $f2, $f4, $f6':
-	registers = i.split()[1]
+case 'mul.d $f2, $f4, $f6':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.mul_d $f2, $f4, $f6($f2, $f4, $f6)
+	traduction = translator.mul.d($f2, $f4, $f6)                         
 	translated.append(traduction) 
 
-case 'mul.s $f1, $f2, $f3':
-	registers = i.split()[1]
+case 'mul.s $f1, $f2, $f3':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.mul_s $f1, $f2, $f3($f1, $f2, $f3)
+	traduction = translator.mul.s($f1, $f2, $f3)                         
 	translated.append(traduction) 
 
-case 'mult $t1, $t2':
-	registers = i.split()[1]
+case 'mult $t1, $t2':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.mult $t1, $t2($t1, $t2)
+	traduction = translator.mult($t1, $t2)                         
 	translated.append(traduction) 
 
-case 'sb $t4, 1000($t2)':
-	registers = i.split()[1]
+case 'sb $t4, 1000($t2)':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.sb $t4, 1000($t2)($t4, 1000($t2))
+	traduction = translator.sb($t4, 1000($t2))                         
 	translated.append(traduction) 
 
-case 'sll $t2, $t3, 10':
-	registers = i.split()[1]
+case 'sll $t2, $t3, 10':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.sll $t2, $t3, 10($t2, $t3, 10)
+	traduction = translator.sll($t2, $t3, 10)                         
 	translated.append(traduction) 
 
-case 'srl $t2, $t3, 10':
-	registers = i.split()[1]
+case 'srl $t2, $t3, 10':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.srl $t2, $t3, 10($t2, $t3, 10)
+	traduction = translator.srl($t2, $t3, 10)                         
 	translated.append(traduction) 
 
-case 'slt $t1, $t2, $t3':
-	registers = i.split()[1]
+case 'slt $t1, $t2, $t3':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.slt $t1, $t2, $t3($t1, $t2, $t3)
+	traduction = translator.slt($t1, $t2, $t3)                         
 	translated.append(traduction) 
 
-case 'slti $t1, $t2, -100':
-	registers = i.split()[1]
+case 'slti $t1, $t2, -100':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.slti $t1, $t2, -100($t1, $t2, -100)
+	traduction = translator.slti($t1, $t2, -100)                         
 	translated.append(traduction) 
 
-case 'sltu $t1, $t2, -100':
-	registers = i.split()[1]
+case 'sltu $t1, $t2, -100':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.sltu $t1, $t2, -100($t1, $t2, -100)
+	traduction = translator.sltu($t1, $t2, -100)                         
 	translated.append(traduction) 
 
-case 'sra $t2, $t1, 10':
-	registers = i.split()[1]
+case 'sra $t2, $t1, 10':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.sra $t2, $t1, 10($t2, $t1, 10)
+	traduction = translator.sra($t2, $t1, 10)                         
 	translated.append(traduction) 
 
-case 'srav $t1, $t2, $t3':
-	registers = i.split()[1]
+case 'srav $t1, $t2, $t3':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.srav $t1, $t2, $t3($t1, $t2, $t3)
+	traduction = translator.srav($t1, $t2, $t3)                         
 	translated.append(traduction) 
 
-case 'sub.d $f2, $f4, $f6':
-	registers = i.split()[1]
+case 'sub.d $f2, $f4, $f6':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.sub_d $f2, $f4, $f6($f2, $f4, $f6)
+	traduction = translator.sub.d($f2, $f4, $f6)                         
 	translated.append(traduction) 
 
-case 'sub.s $f0, $f1, $f3':
-	registers = i.split()[1]
+case 'sub.s $f0, $f1, $f3':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.sub_s $f0, $f1, $f3($f0, $f1, $f3)
+	traduction = translator.sub.s($f0, $f1, $f3)                         
 	translated.append(traduction) 
 
-case 'sw $t0, OFFSET($s3)':
-	registers = i.split()[1]
+case 'sw $t0, OFFSET($s3)':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.sw $t0, OFFSET($s3)($t0, OFFSET($s3))
+	traduction = translator.sw($t0, OFFSET($s3))                         
 	translated.append(traduction) 
 
-case 'teq $t1, $t2':
-	registers = i.split()[1]
+case 'teq $t1, $t2':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.teq $t1, $t2($t1, $t2)
+	traduction = translator.teq($t1, $t2)                         
 	translated.append(traduction) 
 
-case 'tge $t1, $t2':
-	registers = i.split()[1]
+case 'tge $t1, $t2':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.tge $t1, $t2($t1, $t2)
+	traduction = translator.tge($t1, $t2)                         
 	translated.append(traduction) 
 
-case 'tgei $t1, -100':
-	registers = i.split()[1]
+case 'tgei $t1, -100':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.tgei $t1, -100($t1, -100)
+	traduction = translator.tgei($t1, -100)                         
 	translated.append(traduction) 
 
-case 'u $t1, -100':
-	registers = i.split()[1]
+case 'u $t1, -100':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.u $t1, -100($t1, -100)
+	traduction = translator.u($t1, -100)                         
 	translated.append(traduction) 
 
-case 'tne $t1, $t2':
-	registers = i.split()[1]
+case 'tne $t1, $t2':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.tne $t1, $t2($t1, $t2)
+	traduction = translator.tne($t1, $t2)                         
 	translated.append(traduction) 
 
-case 'tnei $t1, -100':
-	registers = i.split()[1]
+case 'tnei $t1, -100':                         
+	registers = i.split(,1)[1]                         
 	translator = Translator()
-	traduction = translator.tnei $t1, -100($t1, -100)
+	traduction = translator.tnei($t1, -100)                         
 	translated.append(traduction) 
 
