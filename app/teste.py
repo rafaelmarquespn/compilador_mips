@@ -37,9 +37,9 @@ def match_case_automatico():
             j = n.replace('.','_')
             instrucao, registradores = n.split(' ', 1)
             lista.append("case " + f"'{n}'" + ":" + f'\
-                         \n\tregisters = i.split(' ',1)[1]\
+                         \n\tregisters = i.split(" ", 1)[1]\
                          \n\ttranslator = Translator()' + 
-                         f'\n\ttraduction = translator.{instrucao}({registradores})\
+                         f'\n\ttraduction = translator.{instrucao}("{registradores}")\
                          \n\ttranslated.append(traduction) ' + "\n")
 
     with open('compilador_mips\\app\\archives\\match.txt', 'w') as arq :
