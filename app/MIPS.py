@@ -622,12 +622,11 @@ class Translator(Registers):
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
 
-
-
 def load_file(path:str) -> list:
     with open(path, 'r', encoding="utf-8") as arq:
         asm = arq.readlines()
     return asm
+
 
 def split_data_text(asm:list)->list:
     data = list()
@@ -648,6 +647,7 @@ def split_data_text(asm:list)->list:
             text.append(i)
 
     return data, text
+
 
 def translate_text(text:list)->list:
     translated = list()

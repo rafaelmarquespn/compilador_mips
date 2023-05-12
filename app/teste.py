@@ -8,6 +8,7 @@ def ordem_alfabetica():
             for n in i:
                 f.write(n +'\n')
 
+#ordem_alfabetica()
 
 def separar_linha():
     lista = []
@@ -27,6 +28,7 @@ def separar_linha():
         for n in lista:
             arq.write(n +'\n')
 
+#separar_linha()
 
 def match_case_automatico():
     lista = []
@@ -46,7 +48,7 @@ def match_case_automatico():
         for n in lista:
             arq.write(n +'\n')
 
-match_case_automatico()
+#match_case_automatico()
 
 def metodos_automatico():
     with open('compilador_mips\\app\\archives\\instrucoes.txt', 'r') as arq :
@@ -95,3 +97,4 @@ def instrucoes():
         for n in lista:
             arq.write(n +'\n')
 
+#instrucoes()
