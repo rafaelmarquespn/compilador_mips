@@ -2,75 +2,78 @@ class Registers():
     def __init__(self) -> None:
         pass
         
-    def zero(self, registers:str):
+    def zero(self):
         return "00000"
-    def at(self, registers:str):
+    def at(self):
         return "00001"
-    def v0(self, registers:str):
+    def v0(self):
         return "00010"
-    def v1(self, registers:str):
+    def v1(self):
         return "00011"
-    def a0(self, registers:str):
+    def a0(self):
         return "00100"
-    def a1(self, registers:str):
+    def a1(self):
         return "00101"
-    def a2(self, registers:str):
+    def a2(self):
         return "00110"
-    def a3(self, registers:str):
+    def a3(self):
         return "00111"
-    def t0(self, registers:str):
+    def t0(self):
         return "01000"
-    def t1(self, registers:str):
+    def t1(self):
         return "01001"
-    def t2(self, registers:str):
+    def t2(self):
         return "01010"
-    def t3(self, registers:str):
+    def t3(self):
         return "01011"
-    def t4(self, registers:str):
+    def t4(self):
         return "01100"
-    def t5(self, registers:str):
+    def t5(self):
         return "01101"
-    def t6(self, registers:str):
+    def t6(self):
         return "01110"
-    def t7(self, registers:str):
+    def t7(self):
         return "01111"
-    def s0(self, registers:str):
+    def s0(self):
         return "10000"
-    def s1(self, registers:str):
+    def s1(self):
         return "10001"
-    def s2(self, registers:str):
+    def s2(self):
         return "10010"
-    def s3(self, registers:str):
+    def s3(self):
         return "10011"
-    def s4(self, registers:str):
+    def s4(self):
         return "10100"
-    def s5(self, registers:str):
+    def s5(self):
         return "10101"
-    def s6(self, registers:str):
+    def s6(self):
         return "10110"
-    def s7(self, registers:str):
+    def s7(self):
         return "10111"
-    def t8(self, registers:str):
+    def t8(self):
         return "11000"
-    def t9(self, registers:str):
+    def t9(self):
         return "11001"
-    def k0(self, registers:str):
+    def k0(self):
         return "11010"
-    def k1(self, registers:str):
+    def k1(self):
         return "11011"
-    def gp(self, registers:str):
+    def gp(self):
         return "11100"
-    def sp(self, registers:str):
+    def sp(self):
         return "11101"
-    def fp(self, registers:str):
+    def fp(self):
         return "11110"
-    def ra(self, registers:str):
+    def ra(self):
         return "11111"
     
 
 class Translator(Registers):
     def __init__(self) -> None:
         pass
+    def separar_registradores(self, registers:str) -> list:
+        registers = registers.split(', ')
+        return registers
 
     def add_d(self, registers:str):                        
         opcode = "010001"                        
@@ -1021,19 +1024,14 @@ def translate_text(text:list)->list:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-asm = load_file("app\\archives\\example_saida.asm")
-data, text = split_data_text(asm)
-print(data)
-print()
-print(text)
+#asm = load_file("app\\archives\\example_saida.asm")
+#data, text = split_data_text(asm)
+# print(data)
+# print()
+# print(text)
+registrador = Registers()
+print(registrador.zero())
+var = 'zero'
+var2 = f'registrador.{var}()'
+print(exec(f"var3 = {var2}"))
+# print(var3)
