@@ -1,7 +1,7 @@
 class Registers():
+
     def __init__(self) -> None:
         pass
-        
     def zero(self, registers:str):
         return "00000"
     def at(self, registers:str):

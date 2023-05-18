@@ -8,7 +8,6 @@ def ordem_alfabetica():
             for n in i:
                 f.write(n +'\n')
 
-
 def separar_linha():
     lista = []
     with open('compilador_mips\\app\\archives\\exemplos_in.txt', 'r') as arq :
@@ -26,7 +25,6 @@ def separar_linha():
     with open('compilador_mips\\app\\archives\\exemplos_in.txt', 'w') as arq :
         for n in lista:
             arq.write(n +'\n')
-
 
 def match_case_automatico():
     lista = []
@@ -47,6 +45,20 @@ def match_case_automatico():
             arq.write(n +'\n')
 
 match_case_automatico()
+
+
+def instrucoes():
+    with open('compilador_mips\\app\\archives\\entradas_validas.txt', 'r') as arq :
+        i = arq.readlines()
+        i = [m.strip() for m in i]
+        lista = []
+        for n in i:
+            j = n.split(' ', 1)[0]
+            lista.append(f'{j}')    
+    with open('compilador_mips\\app\\archives\\instrucoes.txt', 'w') as arq :
+        for n in lista:
+            arq.write(n +'\n')
+
 
 def metodos_automatico():
     with open('compilador_mips\\app\\archives\\instrucoes.txt', 'r') as arq :
@@ -83,15 +95,4 @@ def metodos_automatico():
 
 #metodos_automatico()
 
-def instrucoes():
-    with open('compilador_mips\\app\\archives\\entradas_validas.txt', 'r') as arq :
-        i = arq.readlines()
-        i = [m.strip() for m in i]
-        lista = []
-        for n in i:
-            j = n.split(' ', 1)[0]
-            lista.append(f'{j}')    
-    with open('compilador_mips\\app\\archives\\instrucoes.txt', 'w') as arq :
-        for n in lista:
-            arq.write(n +'\n')
 
