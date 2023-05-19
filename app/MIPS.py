@@ -1240,12 +1240,6 @@ def translate_text(text:list)->list:
 
 
 
-
-
-
-
-
-
 #asm = load_file("app\\archives\\example_saida.asm")
 #data, text = split_data_text(asm)
 # print(data)
