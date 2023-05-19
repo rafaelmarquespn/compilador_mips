@@ -1,3 +1,10 @@
 .venv\*
 poetry.lock
 pyproject.toml
+..\oac_mips\*
+..\tests\*
+..\python-version\*
+..\README.md
+..\poetry.lock
+..\pyproject.toml
+```

@@ -1,0 +1,13 @@
+mflo $t1
+j LABEL
+jal LABEL
+jalr $t1
+jr $t0
+mfhi $t1
+mflo $t1
+j LABEL
+jal LABEL
+jalr $t1
+jr $t0
+mfhi $t1
+mflo $t1
