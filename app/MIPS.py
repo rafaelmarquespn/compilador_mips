@@ -575,17 +575,17 @@ class Translator(Registers):
         registrador = self.registradores.split(", ")                        
         opcode = "010001"                        
         fmt = "10000"                                                
-        exec(f"self.ft = self.{registrador[2]}")                        
-        exec(f"self.fs = self.{registrador[1]}")                         
-        exec(f"self.fd = self.{registrador[0]}")                         
+        exec(f"self.__ft = self.{registrador[2]}")                        
+        exec(f"self.__fs = self.{registrador[1]}")                         
+        exec(f"self.__fd = self.{registrador[0]}")                         
         funct = "000010"                        
         return hex(int((opcode + fmt + self.ft + self.fs + self.fd  + funct),2))
 
     def mult(self):                        
         registrador = self.registradores.split(", ")                        
         opcode = "000000"                        
-        exec(f"self.rs = self.{registrador[0]}()")                        
-        exec(f"self.rt = self.{registrador[1]}()")                        
+        exec(f"self.__rs = self.{registrador[0]}()")                        
+        exec(f"self.__rt = self.{registrador[1]}()")                        
         rd = "00000"                                               
         shamt = "00000"                        
         funct = "011000"                        
@@ -602,8 +602,8 @@ class Translator(Registers):
         registrador = self.registradores.split(", ")                        
         opcode = "000000"  
         rs = "00000"                      
-        exec(f"self.rt = self.{registrador[0]}()")                        
-        exec(f"self.rd = self.{registrador[0]}()")                                               
+        exec(f"self.__rt = self.{registrador[1]}()")                        
+        exec(f"self.__rd = self.{registrador[0]}()")                                               
         sa = self.sa(registrador[2])                    
         funct = "000000"                        
         return hex(int((opcode + rs + self.rt + self.rd + sa + funct),2))
@@ -612,8 +612,8 @@ class Translator(Registers):
         registrador = self.registradores.split(", ")                        
         opcode = "000000"                        
         rs = "00000"                        
-        exec(f"self.rt = self.{registrador[0]}()")                        
-        exec(f"self.rd = self.{registrador[0]}()")                        
+        exec(f"self.__rt = self.{registrador[1]}()")                        
+        exec(f"self.__rd = self.{registrador[0]}()")                        
         sa = self.sa(registrador[2])                       
         funct = "000010"                        
         return hex(int((opcode + rs + self.rt + self.rd + sa + funct),2))
@@ -621,27 +621,27 @@ class Translator(Registers):
     def slt(self):                        
         registrador = self.registradores.split(", ")                        
         opcode = "000000"                        
-        exec(f"self.rs = self.{registrador[0]}()")                        
-        exec(f"self.rt = self.{registrador[0]}()")                        
-        exec(f"self.rd = self.{registrador[0]}()")                       
-        shamt = ""                        
+        exec(f"self.__rs = self.{registrador[1]}()")                        
+        exec(f"self.__rt = self.{registrador[2]}()")                        
+        exec(f"self.__rd = self.{registrador[0]}()")                       
+        shamt = "00000"                        
         funct = "101010"                        
         return hex(int((opcode + self.rs + self.rt + self.rd + shamt + funct),2))
 
     def slti(self):                        
         registrador = self.registradores.split(", ")                        
         opcode = "001010"                        
-        exec(f"self.rs = self.{registrador[0]}()")                        
-        exec(f"self.rt = self.{registrador[0]}()")                        
-        exec(f"self.imediato = self.imm({registrador[2]})")                        
-        return hex(int((opcode + self.rs + self.rt + self.rd + self.imediato),2))
+        exec(f"self.__rs = self.{registrador[1]}()")                        
+        exec(f"self.__rt = self.{registrador[0]}()")                        
+        exec(f"self.__imediato = self.imm({registrador[2]})")                        
+        return hex(int((opcode + self.__rs + self.__rt + self.__imediato),2))
 
     def sltu(self):                        
         registrador = self.registradores.split(", ")                        
         opcode = "000000"                        
-        exec(f"self.rs = self.{registrador[0]}()")                        
-        exec(f"self.rt = self.{registrador[0]}()")                        
-        exec(f"self.rd = self.{registrador[0]}()")                       
+        exec(f"self.__rs = self.{registrador[1]}()")                        
+        exec(f"self.__rt = self.{registrador[1]}()")                        
+        exec(f"self.__rd = self.{registrador[0]}()")                       
         shamt = "00000"                        
         funct = "101011"                        
         return hex(int((opcode + self.rs + self.rt + self.rd + shamt + funct),2))
@@ -650,8 +650,8 @@ class Translator(Registers):
         registrador = self.registradores.split(", ")                        
         opcode = "000000"                        
         rs = "00000"                                               
-        exec(f"self.rt = self.{registrador[0]}()")                        
-        exec(f"self.rd = self.{registrador[0]}()")
+        exec(f"self.__rt = self.{registrador[1]}()")                        
+        exec(f"self.__rd = self.{registrador[0]}()")
         sa = self.sa(registrador[2])
         funct = "000011"                        
         return hex(int((opcode + rs + self.rt + self.rd + sa + funct),2))
@@ -659,9 +659,9 @@ class Translator(Registers):
     def srav(self):                        
         registrador = self.registradores.split(", ")                        
         opcode = "000000"                        
-        exec(f"self.rs = self.{registrador[0]}()")                        
-        exec(f"self.rt = self.{registrador[0]}()")                        
-        exec(f"self.rd = self.{registrador[0]}()")                       
+        exec(f"self.__rs = self.{registrador[1]}()")                        
+        exec(f"self.__rt = self.{registrador[2]}()")                        
+        exec(f"self.__rd = self.{registrador[0]}()")                       
         shamt = "000000"                        
         funct = "000111"                        
         return hex(int((opcode + self.rs + self.rt + self.rd + shamt + funct),2))
@@ -673,8 +673,8 @@ class Translator(Registers):
         exec(f"self.ft = self.{registrador[2]}()")                                             
         exec(f"self.fd = self.{registrador[0]}()")                        
         fmt = "10001"                       
-        funct = "000111"                        
-        return hex(int((opcode + self.ft + self.fs + self.fd + fmt + funct),2))                   
+        funct = "000001"                        
+        return hex(int((opcode + self.__ft + self.__fs + self.__fd + fmt + funct),2))                   
 
     def sub_s(self):                        
         registrador = self.registradores.split(", ")                        
@@ -696,8 +696,8 @@ class Translator(Registers):
     def teq(self):                        
         registrador = self.registradores.split(", ")                        
         opcode = "000000"                        
-        exec(f"self.rs = self.{registrador[0]}()")                        
-        exec(f"self.rt = self.{registrador[0]}()")                                              
+        exec(f"self.__rs = self.{registrador[0]}()")                        
+        exec(f"self.__rt = self.{registrador[1]}()")                                              
         code = "0000000000"                        
         funct = "110100"                        
         return hex(int((opcode + self.rs + self.rt + code + funct),2))
@@ -736,8 +736,8 @@ class Translator(Registers):
     def tne(self):                        
         registrador = self.registradores.split(", ")                        
         opcode = "000000"                        
-        exec(f"self.rs = self.{registrador[0]}()")                        
-        exec(f"self.rt = self.{registrador[0]}()")                        
+        exec(f"self.__rs = self.{registrador[0]}()")                        
+        exec(f"self.__rt = self.{registrador[1]}()")                        
         tne = "0000000000"                     
         funct = "110110"                        
         return hex(int((opcode + self.rs + self.rt + tne + funct),2))
