@@ -8,6 +8,7 @@ def ordem_alfabetica():
             for n in i:
                 f.write(n +'\n')
 
+
 def separar_linha():
     lista = []
     with open('compilador_mips\\app\\archives\\exemplos_in.txt', 'r') as arq :
@@ -26,45 +27,32 @@ def separar_linha():
         for n in lista:
             arq.write(n +'\n')
 
+
 def match_case_automatico():
     lista = []
-    with open('compilador_mips\\app\\archives\\entradas_validas.txt', 'r') as arq :
+    with open('D:\\developer\\projetos\\OAC-MIPS\\app\\archives\\entradas_validas.txt', 'r') as arq :
         i = arq.readlines()
         i = [m.strip() for m in i]
         for n in i:
             j = n.replace('.','_')
             instrucao, registradores = n.split(' ', 1)
-            lista.append("case " + f"'{n}'" + ":" + f'\
-                         \n\tregisters = i.split(" ", 1)[1]\
-                         \n\ttranslator = Translator()' + 
-                         f'\n\ttraduction = translator.{instrucao}("{registradores}")\
+            instrucao = instrucao.replace('.','_')
+            lista.append("case " + f"'{instrucao}'" + ":" + f'\
+                         \n\ttranslator = Translator(text, intrucao, registradores)' + 
+                         f'\n\ttraduction = translator.{instrucao}()\
                          \n\ttranslated.append(traduction) ' + "\n")
 
-    with open('compilador_mips\\app\\archives\\match.txt', 'w') as arq :
+    with open('D:\\developer\\projetos\\OAC-MIPS\\app\\archives\\match.txt', 'w') as arq :
         for n in lista:
             arq.write(n +'\n')
 
-match_case_automatico()
-
-
-def instrucoes():
-    with open('compilador_mips\\app\\archives\\entradas_validas.txt', 'r') as arq :
-        i = arq.readlines()
-        i = [m.strip() for m in i]
-        lista = []
-        for n in i:
-            j = n.split(' ', 1)[0]
-            lista.append(f'{j}')    
-    with open('compilador_mips\\app\\archives\\instrucoes.txt', 'w') as arq :
-        for n in lista:
-            arq.write(n +'\n')
-
+#match_case_automatico()
 
 def metodos_automatico():
-    with open('compilador_mips\\app\\archives\\instrucoes.txt', 'r') as arq :
+    with open('D:\\developer\\projetos\\OAC-MIPS\\app\\archives\\instrucoes.txt', 'r') as arq :
         i = arq.readlines()
         i = [m.strip() for m in i]
-    with open('compilador_mips\\app\\archives\\inst_binario.txt', 'r') as arq :
+    with open('D:\\developer\\projetos\\OAC-MIPS\\app\\archives\\inst_binario.txt', 'r') as arq :
         h = arq.readlines()
         h = [m.strip() for m in h]
         lista2 = []
@@ -80,19 +68,34 @@ def metodos_automatico():
         lista = []
         for n in range(len(i)):
             j = i[n].replace('.','_')
-            lista.append(f'def {j}(self, registers:str):\
+            lista.append(f'def {j}(self):\
+                        \n\tregistrador = self.registradores.split(", ", "")\
                         \n\topcode = "{lista2[n][0] if len(lista2[n]) == 2 else lista2[n]}"\
                         \n\trs = ""\
+                        \n\texec(f"rs = self.registrador[0]")\
                         \n\trt = ""\
+                        \n\texec(f"rt = self.registrador[1]")\
                         \n\trd = ""\
+                        \n\texec(f"rd = self.registrador[2]")\
                         \n\tshamt = ""\
                         \n\tfunct = "{lista2[n][1] if len(lista2[n]) == 2 else None}"\
                         \n\treturn hex(int((opcode + rs + rt + rd + shamt + func),2))\n')    
 
-    with open('compilador_mips\\app\\archives\\metodos.txt', 'w') as arq :
+    with open('D:\\developer\\projetos\\OAC-MIPS\\app\\archives\\metodos.txt', 'w') as arq :
         for n in lista:
             arq.write(n +'\n')
 
-#metodos_automatico()
+metodos_automatico()
 
+def instrucoes():
+    with open('compilador_mips\\app\\archives\\entradas_validas.txt', 'r') as arq :
+        i = arq.readlines()
+        i = [m.strip() for m in i]
+        lista = []
+        for n in i:
+            j = n.split(' ', 1)[0]
+            lista.append(f'{j}')    
+    with open('compilador_mips\\app\\archives\\instrucoes.txt', 'w') as arq :
+        for n in lista:
+            arq.write(n +'\n')
 

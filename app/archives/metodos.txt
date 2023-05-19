@@ -1,548 +1,792 @@
-def add_d(self, registers:str):                        
+def add_d(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "010001"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "000001"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def add_s(self, registers:str):                        
+def add_s(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "010001"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "000000"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def add(self, registers:str):                        
+def add(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "100000"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def sub(self, registers:str):                        
+def sub(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "100010"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def and(self, registers:str):                        
+def and(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "100100"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def or(self, registers:str):                        
+def or(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "100101"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def nor(self, registers:str):                        
+def nor(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "100111"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def xor(self, registers:str):                        
+def xor(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "100110"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def addi(self, registers:str):                        
+def addi(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "001000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "None"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def andi(self, registers:str):                        
+def andi(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "001100"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "None"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def ori(self, registers:str):                        
+def ori(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "001101"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "None"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def xori(self, registers:str):                        
+def xori(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "001110"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "None"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def addiu(self, registers:str):                        
+def addiu(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "001001"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "None"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def addu(self, registers:str):                        
+def addu(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "100001"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def subu(self, registers:str):                        
+def subu(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "100011"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def beq(self, registers:str):                        
+def beq(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000100"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "None"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def bne(self, registers:str):                        
+def bne(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000101"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "None"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def bgez(self, registers:str):                        
+def bgez(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000001"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "000001"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def bgezal(self, registers:str):                        
+def bgezal(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000001"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "100001"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def c_eq_d(self, registers:str):                        
+def c_eq_d(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "010001"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "101001"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def c_eq_s(self, registers:str):                        
+def c_eq_s(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "010001"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "101000"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def clo(self, registers:str):                        
+def clo(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "100001"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def div(self, registers:str):                        
+def div(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "011010"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def div_d(self, registers:str):                        
+def div_d(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "010001"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "111001"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def div_s(self, registers:str):                        
+def div_s(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "010001"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "111000"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def j(self, registers:str):                        
+def j(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000010"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "None"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def jal(self, registers:str):                        
+def jal(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000011"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "None"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def jalr(self, registers:str):                        
+def jalr(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "001001"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def jr(self, registers:str):                        
+def jr(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "001000"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def lb(self, registers:str):                        
+def lb(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "100000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "None"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def lh(self, registers:str):                        
+def lh(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "100001"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "None"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def lhu(self, registers:str):                        
+def lhu(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "100101"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "None"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def li(self, registers:str):                        
+def li(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "001111"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "None"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def lui(self, registers:str):                        
+def lui(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "001111"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "None"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def lw(self, registers:str):                        
+def lw(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "100011"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "None"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def madd(self, registers:str):                        
+def madd(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "011100"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "None"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def mfhi(self, registers:str):                        
+def mfhi(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "010000"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def mflo(self, registers:str):                        
+def mflo(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "010010"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def movn(self, registers:str):                        
+def movn(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "001011"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def msubu(self, registers:str):                        
+def msubu(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "011101"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "None"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def mul(self, registers:str):                        
+def mul(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "011100"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "None"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def mul_d(self, registers:str):                        
+def mul_d(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "010001"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "010010"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def mul_s(self, registers:str):                        
+def mul_s(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "010001"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "010000"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def mult(self, registers:str):                        
+def mult(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "011000"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def sb(self, registers:str):                        
+def sb(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "101000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "None"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def sll(self, registers:str):                        
+def sll(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "000000"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def srl(self, registers:str):                        
+def srl(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "000010"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def slt(self, registers:str):                        
+def slt(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "101010"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def slti(self, registers:str):                        
+def slti(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "001010"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "None"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def sltu(self, registers:str):                        
+def sltu(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "101011"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def sra(self, registers:str):                        
+def sra(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "000011"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def srav(self, registers:str):                        
+def srav(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "000111"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def sub_d(self, registers:str):                        
+def sub_d(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "010001"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "000011"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def sub_s(self, registers:str):                        
+def sub_s(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "010001"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "000010"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def sw(self, registers:str):                        
+def sw(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "101011"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "None"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def teq(self, registers:str):                        
+def teq(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "110100"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def tge(self, registers:str):                        
+def tge(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "110000"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def tgei(self, registers:str):                        
+def tgei(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000001"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "010000"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def u(self, registers:str):                        
+def u(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000000"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "110001"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def tne(self, registers:str):                        
+def tne(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "00001"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "01000"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
 
-def tnei(self, registers:str):                        
+def tnei(self):                        
+	registrador = self.registradores.split(", ", "")                        
 	opcode = "000001"                        
 	rs = ""                        
+	exec(f"rs = self.registrador[0]")                        
 	rt = ""                        
+	exec(f"rt = self.registrador[1]")                        
 	rd = ""                        
+	exec(f"rd = self.registrador[2]")                        
 	shamt = ""                        
 	funct = "01001"                        
 	return hex(int((opcode + rs + rt + rd + shamt + func),2))
