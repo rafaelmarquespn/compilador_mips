@@ -699,7 +699,7 @@ class Translator(Registers):
         exec(f"rt = self.registrador[1]")                                               
         shamt = ""                        
         funct = "000000"                        
-        return hex(int((opcode + rs + rt + rd + shamt + funct),2))
+        return hex(int((opcode +  rt + rd + shamt + funct),2))
 #TODO
     def srl(self):                        
         registrador = self.registradores.split(", ", "")                        
