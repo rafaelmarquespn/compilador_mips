@@ -123,24 +123,3 @@ def separa_tipo():
                 arq.write(i + '\n')
 
 
-
-
-def separa_tipo():
-    lista = []
-    with open('compilador_mips\\app\\archives\\entradas_validas.txt', 'r', encoding='utf-8') as arq:
-        for i in arq.readlines():
-            i = i.strip()
-            lista.append(i)
-    for i in lista:
-        instrucao, registradores = i.split(' ', 1)
-        if len(registradores.split(',')) == 1:
-            with open('compilador_mips\\app\\archives\\tipo_r.txt', 'a', encoding='utf-8') as arq:
-                arq.write(i + '\n')
-        elif len(registradores.split(',')) == 2:
-            with open('compilador_mips\\app\\archives\\tipo_i.txt', 'a', encoding='utf-8') as arq:
-                arq.write(i + '\n')
-        elif len(registradores.split(',')) == 3:
-            with open('compilador_mips\\app\\archives\\tipo_j.txt', 'a', encoding='utf-8') as arq:
-                arq.write(i + '\n')
-
-
