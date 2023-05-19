@@ -1,8 +1,86 @@
-class Registers():
+class FloatRegisters:
     def __init__(self) -> None:
         pass
-        
-    def zero(self):
+    def f0(self):
+        return "00000"
+    def f1(self):        
+        return "00001"
+    def f2(self):
+        return "00010"
+    def f3(self):
+        return "00011"
+    def f4(self):
+        return "00100"
+    def f5(self):
+        return "00101"
+    def f6(self):
+        return "00110"
+    def f7(self):
+        return "00111"
+    def f8(self):
+        return "01000"
+    def f9(self):
+        return "01001"
+    def f10(self):
+        return "01010"
+    def f11(self):
+        return "01011"
+    def f12(self):
+        return "01100"
+    def f13(self):
+        return "01101"
+    def f14(self):
+        return "01110"
+    def f15(self):
+        return "01111"
+    def f16(self):
+        return "10000"
+    def f17(self):
+        return "10001"
+    def f18(self):
+        return "10010"
+    def f19(self):
+        return "10011"
+    def f20(self):
+        return "10100"
+    def f21(self):
+        return "10101"
+    def f22(self):
+        return "10110"
+    def f23(self):
+        return "10111"
+    def f24(self):
+        return "11000"
+    def f25(self):
+        return "11001"
+    def f26(self):
+        return "11010"
+    def f27(self):
+        return "11011"
+    def f28(self):
+        return "11100"
+    def f29(self):
+        return "11101"
+    def f30(self):
+        return "11110" 
+    def f31(self):
+        return "11111"
+    
+
+class Registers(FloatRegisters):
+
+    def __init__(self) -> None:
+        pass
+
+    def imm(self, imediato:float):
+        if '-' in imediato:
+            im_positivo =  bin(int(imediato))[2:].zfill(16)
+            im_negativo = int(1111111111111111) - int(im_positivo)
+            return str(im_negativo)
+        else:
+            return bin(int(imediato))[2:].zfill(16)
+
+    def zero(self, registers:str):
         return "00000"
     def at(self):
         return "00001"
@@ -69,560 +147,755 @@ class Registers():
     
 
 class Translator(Registers):
-    def __init__(self) -> None:
-        pass
-    def separar_registradores(self, registers:str) -> list:
-        registers = registers.split(', ')
-        return registers
+    def __init__(self, text, instrução, registradores) -> None:
+        self.text = text
+        self.instrução = instrução
+        self.registradores = registradores.replace('$', '')
 
-    def add_d(self, registers:str):                        
+
+    def labels(self, label):
+        for i in self.text:
+            i = i.replace(':', '')
+            if label == i:
+                return bin((int(self.text.index(f'{i}:')) + 1) * 4)[2:].zfill(16)
+            
+    def offset(self, endereço):
+        offset, registrador = endereço.split('(').replace(')', '')
+        offset = self.imm(offset)
+        registrador = ''
+        exec(f'registrador = self.{registrador}()')
+        return offset, registrador
+#TODO: Implementar as instruções
+    def add_d(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "010001"                        
         rs = ""                        
+        exec(f"rs = self.{registrador[0]}")                        
         rt = ""                        
+        exec(f"rt = self.{registrador[1]}")                        
         rd = ""                        
+        exec(f"rd = self.{registrador[2]}")                        
         shamt = ""                        
         funct = "000001"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
-
-    def add_s(self, registers:str):                        
+#TODO: Implementar as instruções
+    def add_s(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "010001"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "000000"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def add(self, registers:str):                        
+    def add(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
         rs = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
         rt = ""                        
+        exec(f"rt = self.{registrador[1]}()")                        
         rd = ""                        
-        shamt = ""                        
+        exec(f"rd = self.{registrador[2]}()")                        
+        shamt = "00000"                        
         funct = "100000"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def sub(self, registers:str):                        
+    def sub(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
         rs = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
         rt = ""                        
+        exec(f"rt = self.{registrador[1]}()")                        
         rd = ""                        
-        shamt = ""                        
+        exec(f"rd = self.{registrador[2]}()")                        
+        shamt = "00000"                        
         funct = "100010"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def _and(self, registers:str):                        
+    def _and(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
         rs = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
         rt = ""                        
+        exec(f"rt = self.{registrador[1]}()")                        
         rd = ""                        
-        shamt = ""                        
+        exec(f"rd = self.{registrador[2]}()")                        
+        shamt = "00000"                        
         funct = "100100"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def _or(self, registers:str):                        
+    def _or(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
         rs = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
         rt = ""                        
+        exec(f"rt = self.{registrador[1]}()")                        
         rd = ""                        
-        shamt = ""                        
+        exec(f"rd = self.{registrador[2]}()")                        
+        shamt = "00000"                        
         funct = "100101"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def nor(self, registers:str):                        
+    def nor(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
         rs = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
         rt = ""                        
+        exec(f"rt = self.{registrador[1]}()")                        
         rd = ""                        
-        shamt = ""                        
+        exec(f"rd = self.{registrador[2]}()")                        
+        shamt = "00000"                        
         funct = "100111"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def xor(self, registers:str):                        
+    def xor(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
         rs = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
         rt = ""                        
+        exec(f"rt = self.{registrador[1]}()")                        
         rd = ""                        
-        shamt = ""                        
+        exec(f"rd = self.{registrador[2]}()")                        
+        shamt = "00000"                        
         funct = "100110"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def addi(self, registers:str):                        
+    def addi(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "001000"                        
         rs = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
         rt = ""                        
-        rd = ""                        
-        shamt = ""                        
-        funct = "None"                        
-        return hex(int((opcode + rs + rt + rd + shamt + funct),2))
+        exec(f"rt = self.{registrador[1]}()")                        
+        imm = ""                        
+        exec(f"imm = self.imm({registrador[2]})")                                                
+        return hex(int((opcode + rs + rt + imm ),2))
 
-    def andi(self, registers:str):                        
+    def andi(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "001100"                        
         rs = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
         rt = ""                        
-        rd = ""                        
-        shamt = ""                        
-        funct = "None"                        
-        return hex(int((opcode + rs + rt + rd + shamt + funct),2))
-
-    def ori(self, registers:str):                        
+        exec(f"rt = self.{registrador[1]}()")                        
+        imm = ""                        
+        exec(f"imm = self.imm({registrador[2]})")                                                
+        return hex(int((opcode + rs + rt + imm ),2))
+    
+    def ori(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "001101"                        
         rs = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
         rt = ""                        
-        rd = ""                        
-        shamt = ""                        
-        funct = "None"                        
-        return hex(int((opcode + rs + rt + rd + shamt + funct),2))
-
-    def xori(self, registers:str):                        
+        exec(f"rt = self.{registrador[1]}()")                        
+        imm = ""                        
+        exec(f"imm = self.imm({registrador[2]})")                                                
+        return hex(int((opcode + rs + rt + imm ),2))
+    
+    def xori(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "001110"                        
         rs = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
         rt = ""                        
-        rd = ""                        
-        shamt = ""                        
-        funct = "None"                        
-        return hex(int((opcode + rs + rt + rd + shamt + funct),2))
+        exec(f"rt = self.{registrador[1]}()")                        
+        imm = ""                        
+        exec(f"imm = self.imm({registrador[2]})")                                                
+        return hex(int((opcode + rs + rt + imm ),2))
 
-    def addiu(self, registers:str):                        
+    def addiu(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "001001"                        
         rs = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
         rt = ""                        
-        rd = ""                        
-        shamt = ""                        
-        funct = "None"                        
-        return hex(int((opcode + rs + rt + rd + shamt + funct),2))
+        exec(f"rt = self.{registrador[1]}()")                        
+        imm = ""                        
+        exec(f"imm = self.imm({registrador[2]})")                                                
+        return hex(int((opcode + rs + rt + imm ),2))
 
-    def addu(self, registers:str):                        
+    def addu(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
         rs = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
         rt = ""                        
+        exec(f"rt = self.{registrador[1]}()")                        
         rd = ""                        
-        shamt = ""                        
+        exec(f"rd = self.{registrador[2]}()")                        
+        shamt = "00000"                        
         funct = "100001"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def subu(self, registers:str):                        
-        opcode = "000000"                        
-        rs = ""                        
+    def subu(self):                        
+        registrador = self.registradores.split(", ", "")                        
+        opcode = "000000"    
+        rs = ""                    
+        exec(f"rs = self.{registrador[0]}()")                        
         rt = ""                        
+        exec(f"rt = self.{registrador[1]}()")                        
         rd = ""                        
-        shamt = ""                        
+        exec(f"rd = self.{registrador[2]}()")                        
+        shamt = "00000"                        
         funct = "100011"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def beq(self, registers:str):                        
+    def beq(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000100"                        
         rs = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
         rt = ""                        
-        rd = ""                        
-        shamt = ""                        
-        funct = "None"                        
-        return hex(int((opcode + rs + rt + rd + shamt + funct),2))
+        exec(f"rt = self.{registrador[1]}()")                        
+        label = ""                        
+        exec(f"label = self.labels({registrador[2]})")                                                
+        return hex(int((opcode + rs + rt + label),2))
 
-    def bne(self, registers:str):                        
+    def bne(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000101"                        
         rs = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
         rt = ""                        
-        rd = ""                        
-        shamt = ""                        
-        funct = "None"                        
-        return hex(int((opcode + rs + rt + rd + shamt + funct),2))
+        exec(f"rt = self.{registrador[1]}()")                        
+        label = ""                        
+        exec(f"label = self.labels({registrador[2]})")                                                
+        return hex(int((opcode + rs + rt + label),2))
 
-    def bgez(self, registers:str):                        
+    def bgez(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000001"                        
         rs = ""                        
-        rt = ""                        
-        rd = ""                        
-        shamt = ""                        
-        funct = "000001"                        
-        return hex(int((opcode + rs + rt + rd + shamt + funct),2))
+        exec(f"rs = self.{registrador[0]}()")                        
+        rt = "00001"                        
+        label = ""                        
+        exec(f"label = self.labels({registrador[1]})")                                                
+        return hex(int((opcode + rs + rt + label),2))
 
-    def bgezal(self, registers:str):                        
+    def bgezal(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000001"                        
         rs = ""                        
-        rt = ""                        
-        rd = ""                        
-        shamt = ""                        
-        funct = "100001"                        
-        return hex(int((opcode + rs + rt + rd + shamt + funct),2))
-
-    def c_eq_d(self, registers:str):                        
+        exec(f"rs = self.{registrador[0]}()")                        
+        rt = "10001"                                                
+        offset = ""
+        exec(f"offset = self.labels({registrador[1]})")
+        return hex(int((opcode + rs + rt + offset),2))
+#TODO completar as instruções abaixo
+    def c_eq_d(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "010001"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "101001"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
-
-    def c_eq_s(self, registers:str):                        
+#TODO completar as instruções abaixo
+    def c_eq_s(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "010001"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "101000"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def clo(self, registers:str):                        
-        opcode = "000000"                        
+    def clo(self):                        
+        registrador = self.registradores.split(", ", "")                        
+        opcode = "011100"                        
         rs = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
         rt = ""                        
+        exec(f"rt = self.{registrador[1]}()")                        
         rd = ""                        
-        shamt = ""                        
+        exec(f"rd = self.{registrador[2]}()")                        
+        shamt = "00000"                        
         funct = "100001"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def div(self, registers:str):                        
+    def div(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
         rs = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
         rt = ""                        
-        rd = ""                        
-        shamt = ""                        
+        exec(f"rt = {self.registrador[1]}()")                        
+        rd = "00000"                                                
+        shamt = "00000"                        
         funct = "011010"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
-
-    def div_d(self, registers:str):                        
+#TODO completar as instruções abaixo
+    def div_d(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "010001"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "111001"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
-
-    def div_s(self, registers:str):                        
+#TODO completar as instruções abaixo
+    def div_s(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "010001"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "111000"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def j(self, registers:str):                        
+    def j(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000010"                        
-        rs = ""                        
-        rt = ""                        
-        rd = ""                        
-        shamt = ""                        
-        funct = "None"                        
-        return hex(int((opcode + rs + rt + rd + shamt + funct),2))
+        label = ""
+        exec(f"label = self.labels({registrador[0]})")                        
+        return hex(int((opcode + label.zfill(26) ),2))
 
-    def jal(self, registers:str):                        
-        opcode = "000011"                        
-        rs = ""                        
-        rt = ""                        
-        rd = ""                        
-        shamt = ""                        
-        funct = "None"                        
-        return hex(int((opcode + rs + rt + rd + shamt + funct),2))
-
-    def jalr(self, registers:str):                        
+    def jal(self):                        
+        registrador = self.registradores.split(", ", "")                        
+        opcode = "000011"                                                
+        label = ""
+        exec(f"label = self.labels({registrador[0]})")                        
+        return hex(int((opcode + label.zfill(26) ),2))
+#foi colocado no valor de shampt "00000" como hint
+    def jalr(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
         rs = ""                        
-        rt = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
+        rt = "00000"                        
         rd = ""                        
-        shamt = ""                        
+        exec(f"rd = self.{registrador[2]}()")                        
+        shamt = "00000"                        
         funct = "001001"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
-
-    def jr(self, registers:str):                        
+#foi colocado no valor de shampt "00000" como hint
+    def jr(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
         rs = ""                        
-        rt = ""                        
-        rd = ""                        
-        shamt = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
+        rt = "00000"                                            
+        rd = "00000"                                                
+        shamt = "00000"                        
         funct = "001000"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def lb(self, registers:str):                        
+    def lb(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "100000"                        
-        rs = ""                        
+        base = ""                        
+        exec(f"base, offset = self.offset({registrador[1]})")                        
         rt = ""                        
-        rd = ""                        
-        shamt = ""                        
-        funct = "None"                        
-        return hex(int((opcode + rs + rt + rd + shamt + funct),2))
+        exec(f"rt = self.{registrador[0]}()")                                                
+        offset = ""                                               
+        return hex(int((opcode + base + rt + offset),2))
 
-    def lh(self, registers:str):                        
+    def lh(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "100001"                        
-        rs = ""                        
+        base = ""                        
+        exec(f"base, offset = self.offset({registrador[1]})")                        
         rt = ""                        
-        rd = ""                        
-        shamt = ""                        
-        funct = "None"                        
-        return hex(int((opcode + rs + rt + rd + shamt + funct),2))
+        exec(f"rt = self.{registrador[0]}()")                                                
+        offset = ""                                               
+        return hex(int((opcode + base + rt + offset),2))
 
-    def lhu(self, registers:str):                        
+    def lhu(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "100101"                        
-        rs = ""                        
+        base = ""                        
+        exec(f"base, offset = self.offset({registrador[1]})")                        
         rt = ""                        
-        rd = ""                        
-        shamt = ""                        
-        funct = "None"                        
-        return hex(int((opcode + rs + rt + rd + shamt + funct),2))
-
-    def li(self, registers:str):                        
+        exec(f"rt = self.{registrador[0]}()")                                                
+        offset = ""                                               
+        return hex(int((opcode + base + rt + offset),2))
+#TODO pseudo instrução
+    def li(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "001111"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "None"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def lui(self, registers:str):                        
+    def lui(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "001111"                        
-        rs = ""                        
+        rs = "00000"
         rt = ""                        
-        rd = ""                        
-        shamt = ""                        
-        funct = "None"                        
-        return hex(int((opcode + rs + rt + rd + shamt + funct),2))
+        exec(f"rt = self.{registrador[0]()}")                                                
+        imm = ""
+        exec(f"self.imm({registrador[1]})")               
+        return hex(int((opcode + rs + rt + imm),2))
 
-    def lw(self, registers:str):                        
+    def lw(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "100011"                        
-        rs = ""                        
+        base = ""                        
+        exec(f"base, offset = self.offset({registrador[1]})")                        
         rt = ""                        
-        rd = ""                        
-        shamt = ""                        
-        funct = "None"                        
-        return hex(int((opcode + rs + rt + rd + shamt + funct),2))
+        exec(f"rt = self.{registrador[0]}()")                                                
+        offset = ""                                               
+        return hex(int((opcode + base + rt + offset),2))
 
-    def madd(self, registers:str):                        
+    def madd(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "011100"                        
         rs = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
         rt = ""                        
-        rd = ""                        
-        shamt = ""                        
-        funct = "None"                        
+        exec(f"rt = self.{registrador[1]()}")                        
+        rd = "00000"                                                
+        shamt = "00000"                        
+        funct = "00000"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def mfhi(self, registers:str):                        
+    def mfhi(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
-        rs = ""                        
-        rt = ""                        
+        rs = "00000"                        
+        rt = "00000"                        
         rd = ""                        
-        shamt = ""                        
+        exec(f"rd = self.{registrador[0]}()")                        
+        shamt = "00000"                        
         funct = "010000"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def mflo(self, registers:str):                        
+    def mflo(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
-        rs = ""                        
-        rt = ""                        
+        rs = "00000"                        
+        rt = "00000"                                               
         rd = ""                        
-        shamt = ""                        
+        exec(f"rd = self.{registrador[0]}()")                        
+        shamt = "00000"                        
         funct = "010010"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def movn(self, registers:str):                        
+    def movn(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
         rs = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
         rt = ""                        
+        exec(f"rt = self.{registrador[1]}()")                        
         rd = ""                        
-        shamt = ""                        
+        exec(f"rd = self.{registrador[2]}()")                        
+        shamt = "00000"                        
         funct = "001011"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def msubu(self, registers:str):                        
+    def msubu(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "011101"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
-        rd = ""                        
-        shamt = ""                        
-        funct = "None"                        
+        exec(f"rt = self.registrador[1]")                        
+        rd = "00000"                                               
+        shamt = "00000"                        
+        funct = "000101"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def mul(self, registers:str):                        
+    def mul(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "011100"                        
         rs = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
         rt = ""                        
+        exec(f"rt = self.{registrador[1]}()")                        
         rd = ""                        
-        shamt = ""                        
-        funct = "None"                        
+        exec(f"rd = self.{registrador[2]}()")                        
+        shamt = "00000"                        
+        funct = "000010"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
-
-    def mul_d(self, registers:str):                        
+####
+    def mul_d(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "010001"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "010010"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
-
-    def mul_s(self, registers:str):                        
+####
+    def mul_s(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "010001"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "010000"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def mult(self, registers:str):                        
+    def mult(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
         rs = ""                        
+        exec(f"rs = self.{registrador[0]}()")                        
         rt = ""                        
-        rd = ""                        
-        shamt = ""                        
+        exec(f"rt = self.{registrador[1]}()")                        
+        rd = "00000"                                               
+        shamt = "00000"                        
         funct = "011000"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def sb(self, registers:str):                        
+    def sb(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "101000"                        
-        rs = ""                        
+        base = ""                        
+        exec(f"base, offset = self.offset({registrador[1]})")                        
         rt = ""                        
-        rd = ""                        
-        shamt = ""                        
-        funct = "None"                        
-        return hex(int((opcode + rs + rt + rd + shamt + funct),2))
-
-    def sll(self, registers:str):                        
+        exec(f"rt = self.{registrador[0]}()")                                                
+        offset = ""                                               
+        return hex(int((opcode + base + rt + offset),2))
+#TODO
+    def sll(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
-        rs = ""                        
         rt = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rd = ""                        
+        exec(f"rt = self.registrador[1]")                                               
         shamt = ""                        
         funct = "000000"                        
-        return hex(int((opcode + rs + rt + rd + shamt + funct),2))
-
-    def srl(self, registers:str):                        
+        return hex(int((opcode +  rt + rd + shamt + funct),2))
+#TODO
+    def srl(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "000010"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def slt(self, registers:str):                        
+    def slt(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "101010"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def slti(self, registers:str):                        
+    def slti(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "001010"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "None"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def sltu(self, registers:str):                        
+    def sltu(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "101011"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def sra(self, registers:str):                        
+    def sra(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "000011"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def srav(self, registers:str):                        
+    def srav(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "000111"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def sub_d(self, registers:str):                        
+    def sub_d(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "010001"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "000011"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def sub_s(self, registers:str):                        
+    def sub_s(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "010001"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "000010"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def sw(self, registers:str):                        
+    def sw(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "101011"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "None"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def teq(self, registers:str):                        
+    def teq(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "110100"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def tge(self, registers:str):                        
+    def tge(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "110000"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def tgei(self, registers:str):                        
+    def tgei(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000001"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "010000"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def u(self, registers:str):                        
+    def u(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000000"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "110001"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def tne(self, registers:str):                        
+    def tne(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "00001"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "01000"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
 
-    def tnei(self, registers:str):                        
+    def tnei(self):                        
+        registrador = self.registradores.split(", ", "")                        
         opcode = "000001"                        
         rs = ""                        
+        exec(f"rs = self.registrador[0]")                        
         rt = ""                        
+        exec(f"rt = self.registrador[1]")                        
         rd = ""                        
+        exec(f"rd = self.registrador[2]")                        
         shamt = ""                        
         funct = "01001"                        
         return hex(int((opcode + rs + rt + rd + shamt + funct),2))
+
 
 
 def load_file(path:str) -> list:
@@ -655,372 +928,321 @@ def split_data_text(asm:list)->list:
 def translate_text(text:list)->list:
     translated = list()
     for i in text:
-        match i:
-            case 'add.d $f0, $f2':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.add.d("$f0, $f2")                         
+        instrucao, registradores = i.split(" ", 1)
+        instrucao = instrucao.replace('.', '_')
+        match instrucao:
+            case 'add_d':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.add_d()                         
                 translated.append(traduction) 
 
-            case 'add.s $f1, $f2':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.add.s("$f1, $f2")                         
+            case 'add_s':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.add_s()                         
                 translated.append(traduction) 
 
-            case 'add $t0, $s2, $t0':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.add("$t0, $s2, $t0")                         
+            case 'add':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.add()                         
                 translated.append(traduction) 
 
-            case 'sub $t0, $s2, $t0':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.sub("$t0, $s2, $t0")                         
+            case 'sub':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.sub()                         
                 translated.append(traduction) 
 
-            case 'and $t0, $s2, $t0':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator._and("$t0, $s2, $t0")                         
+            case 'and':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator._and()                         
                 translated.append(traduction) 
 
-            case 'or $t0, $s2, $t0':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator._or("$t0, $s2, $t0")                         
+            case 'or':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator._or()                         
                 translated.append(traduction) 
 
-            case 'nor $t0, $s2, $t0':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.nor("$t0, $s2, $t0")                         
+            case 'nor':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.nor()                         
                 translated.append(traduction) 
 
-            case 'xor $t0, $s2, $t0':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.xor("$t0, $s2, $t0")                         
+            case 'xor':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.xor()                         
                 translated.append(traduction) 
 
-            case 'addi $t2, $t3, -10':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.addi("$t2, $t3, -10")                         
+            case 'addi':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.addi()                         
                 translated.append(traduction) 
 
-            case 'andi $t2, $t3, -10':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.andi("$t2, $t3, -10")                         
+            case 'andi':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.andi()                         
                 translated.append(traduction) 
 
-            case 'ori $t2, $t3, -10':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.ori("$t2, $t3, -10")                         
+            case 'ori':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.ori()                         
                 translated.append(traduction) 
 
-            case 'xori $t2, $t3, -10':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.xori("$t2, $t3, -10")                         
+            case 'xori':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.xori()                         
                 translated.append(traduction) 
 
-            case 'addiu $t1, $t2, $t3':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.addiu("$t1, $t2, $t3")                         
+            case 'addiu':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.addiu()                         
                 translated.append(traduction) 
 
-            case 'addu $t1, $t2, $t3':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.addu("$t1, $t2, $t3")                         
+            case 'addu':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.addu()                         
                 translated.append(traduction) 
 
-            case 'subu $t1, $t2, $t3':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.subu("$t1, $t2, $t3")                         
+            case 'subu':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.subu()                         
                 translated.append(traduction) 
 
-            case 'beq $t1, $zero, LABEL':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.beq("$t1, $zero, LABEL")                         
+            case 'beq':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.beq()                         
                 translated.append(traduction) 
 
-            case 'bne $t1, $zero, LABEL':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.bne("$t1, $zero, LABEL")                         
+            case 'bne':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.bne()                         
                 translated.append(traduction) 
 
-            case 'bgez $t1, LABEL':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.bgez("$t1, LABEL")                         
+            case 'bgez':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.bgez()                         
                 translated.append(traduction) 
 
-            case 'bgezal $t1, LABEL':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.bgezal("$t1, LABEL")                         
+            case 'bgezal':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.bgezal()                         
                 translated.append(traduction) 
 
-            case 'c.eq.d $f2, $f4':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.c.eq.d("$f2, $f4")                         
+            case 'c_eq_d':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.c_eq_d()                         
                 translated.append(traduction) 
 
-            case 'c.eq.s $f0, $f1':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.c.eq.s("$f0, $f1")                         
+            case 'c_eq_s':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.c_eq_s()                         
                 translated.append(traduction) 
 
-            case 'clo $t1, $t2':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.clo("$t1, $t2")                         
+            case 'clo':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.clo()                         
                 translated.append(traduction) 
 
-            case 'div $t1, $t2':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.div("$t1, $t2")                         
+            case 'div':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.div()                         
                 translated.append(traduction) 
 
-            case 'div.d $f2, $f4, $f6':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.div.d("$f2, $f4, $f6")                         
+            case 'div_d':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.div_d()                         
                 translated.append(traduction) 
 
-            case 'div.s $f0, $f1, $f2':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.div.s("$f0, $f1, $f2")                         
+            case 'div_s':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.div_s()                         
                 translated.append(traduction) 
 
-            case 'j LABEL':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.j("LABEL")                         
+            case 'j':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.j()                         
                 translated.append(traduction) 
 
-            case 'jal LABEL':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.jal("LABEL")                         
+            case 'jal':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.jal()                         
                 translated.append(traduction) 
 
-            case 'jalr $t1':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.jalr("$t1")                         
+            case 'jalr':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.jalr()                         
                 translated.append(traduction) 
 
-            case 'jr $t0':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.jr("$t0")                         
+            case 'jr':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.jr()                         
                 translated.append(traduction) 
 
-            case 'lb $t1, 100($t2)':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.lb("$t1, 100($t2)")                         
+            case 'lb':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.lb()                         
                 translated.append(traduction) 
 
-            case 'lh $t1, -100($t2)':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.lh("$t1, -100($t2)")                         
+            case 'lh':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.lh()                         
                 translated.append(traduction) 
 
-            case 'lhu $t1, -100($t2)':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.lhu("$t1, -100($t2)")                         
+            case 'lhu':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.lhu()                         
                 translated.append(traduction) 
 
-            case 'li $t1, XX (incluindo na forma de pseudoinstrução)':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.li("$t1, XX (incluindo na forma de pseudoinstrução)")                         
+            case 'li':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.li()                         
                 translated.append(traduction) 
 
-            case 'lui $t1, 0xXXXX':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.lui("$t1, 0xXXXX")                         
+            case 'lui':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.lui()                         
                 translated.append(traduction) 
 
-            case 'lw $t0, OFFSET($s3)':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.lw("$t0, OFFSET($s3)")                         
+            case 'lw':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.lw()                         
                 translated.append(traduction) 
 
-            case 'madd $t1, $t2':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.madd("$t1, $t2")                         
+            case 'madd':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.madd()                         
                 translated.append(traduction) 
 
-            case 'mfhi $t1':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.mfhi("$t1")                         
+            case 'mfhi':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.mfhi()                         
                 translated.append(traduction) 
 
-            case 'mflo $t1':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.mflo("$t1")                         
+            case 'mflo':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.mflo()                         
                 translated.append(traduction) 
 
-            case 'movn $t1, $t2, $t3':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.movn("$t1, $t2, $t3")                         
+            case 'movn':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.movn()                         
                 translated.append(traduction) 
 
-            case 'msubu $t1, $t2':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.msubu("$t1, $t2")                         
+            case 'msubu':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.msubu()                         
                 translated.append(traduction) 
 
-            case 'mul $t1, $t2, $t5':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.mul("$t1, $t2, $t5")                         
+            case 'mul':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.mul()                         
                 translated.append(traduction) 
 
-            case 'mul.d $f2, $f4, $f6':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.mul.d("$f2, $f4, $f6")                         
+            case 'mul_d':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.mul_d()                         
                 translated.append(traduction) 
 
-            case 'mul.s $f1, $f2, $f3':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.mul.s("$f1, $f2, $f3")                         
+            case 'mul_s':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.mul_s()                         
                 translated.append(traduction) 
 
-            case 'mult $t1, $t2':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.mult("$t1, $t2")                         
+            case 'mult':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.mult()                         
                 translated.append(traduction) 
 
-            case 'sb $t4, 1000($t2)':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.sb("$t4, 1000($t2)")                         
+            case 'sb':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.sb()                         
                 translated.append(traduction) 
 
-            case 'sll $t2, $t3, 10':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.sll("$t2, $t3, 10")                         
+            case 'sll':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.sll()                         
                 translated.append(traduction) 
 
-            case 'srl $t2, $t3, 10':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.srl("$t2, $t3, 10")                         
+            case 'srl':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.srl()                         
                 translated.append(traduction) 
 
-            case 'slt $t1, $t2, $t3':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.slt("$t1, $t2, $t3")                         
+            case 'slt':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.slt()                         
                 translated.append(traduction) 
 
-            case 'slti $t1, $t2, -100':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.slti("$t1, $t2, -100")                         
+            case 'slti':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.slti()                         
                 translated.append(traduction) 
 
-            case 'sltu $t1, $t2, -100':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.sltu("$t1, $t2, -100")                         
+            case 'sltu':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.sltu()                         
                 translated.append(traduction) 
 
-            case 'sra $t2, $t1, 10':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.sra("$t2, $t1, 10")                         
+            case 'sra':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.sra()                         
                 translated.append(traduction) 
 
-            case 'srav $t1, $t2, $t3':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.srav("$t1, $t2, $t3")                         
+            case 'srav':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.srav()                         
                 translated.append(traduction) 
 
-            case 'sub.d $f2, $f4, $f6':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.sub.d("$f2, $f4, $f6")                         
+            case 'sub_d':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.sub_d()                         
                 translated.append(traduction) 
 
-            case 'sub.s $f0, $f1, $f3':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.sub.s("$f0, $f1, $f3")                         
+            case 'sub_s':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.sub_s()                         
                 translated.append(traduction) 
 
-            case 'sw $t0, OFFSET($s3)':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.sw("$t0, OFFSET($s3)")                         
+            case 'sw':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.sw()                         
                 translated.append(traduction) 
 
-            case 'teq $t1, $t2':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.teq("$t1, $t2")                         
+            case 'teq':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.teq()                         
                 translated.append(traduction) 
 
-            case 'tge $t1, $t2':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.tge("$t1, $t2")                         
+            case 'tge':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.tge()                         
                 translated.append(traduction) 
 
-            case 'tgei $t1, -100':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.tgei("$t1, -100")                         
+            case 'tgei':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.tgei()                         
                 translated.append(traduction) 
 
-            case 'u $t1, -100':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.u("$t1, -100")                         
+            case 'u':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.u()                         
                 translated.append(traduction) 
 
-            case 'tne $t1, $t2':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.tne("$t1, $t2")                         
+            case 'tne':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.tne()                         
                 translated.append(traduction) 
 
-            case 'tnei $t1, -100':                         
-                registers = i.split(" ", 1)[1]                         
-                translator = Translator()
-                traduction = translator.tnei("$t1, -100")                         
+            case 'tnei':                         
+                translator = Translator(text, instrucao, registradores)
+                traduction = translator.tnei()                         
                 translated.append(traduction) 
+
+    return translated
+
+
+
+
+
+
 
 
 
