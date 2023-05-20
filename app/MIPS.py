@@ -525,22 +525,24 @@ class Translator(Registers):
     def c_eq_d(self):
         registrador = self.registradores.split(", ")
         opcode = "010001"
-        self.rs = getattr(self, registrador[0])
-        self.rt = getattr(self, registrador[1])
-        self.rd = getattr(self, registrador[2])
-        shamt = ""
+        fmt = "10001"
+        self.fs = getattr(self, registrador[0])
+        self.ft = getattr(self, registrador[1])
+        etc = "0011"
+        cond = "0010"
         funct = "101001"
-        return hex(int((opcode + self.rs + self.rt + self.rd + shamt + funct), 2))
+        return hex(int((opcode + fmt + self.ft + etc + cond + funct), 2))
 
     def c_eq_s(self):
         registrador = self.registradores.split(", ")
         opcode = "010001"
-        self.rs = getattr(self, registrador[0])
-        self.rt = getattr(self, registrador[1])
-        self.rd = getattr(self, registrador[2])
-        shamt = ""
+        fmt = "10000"
+        self.fs = getattr(self, registrador[0])
+        self.ft = getattr(self, registrador[1])
+        etc = "0011"
+        cond = "0010"
         funct = "101000"
-        return hex(int((opcode + self.rs + self.rt + self.rd + shamt + funct), 2))
+        return hex(int((opcode + fmt + self.ft + self.fs + etc + cond + funct), 2))
 
     def clo(self):
         registrador = self.registradores.split(", ")
@@ -1308,11 +1310,12 @@ class Compiler(Translator):
             None
         """
         path_destino: str = self.path_destino
-        
+
         traduction: list[str] = self.text
         contador: int = 0
         with open(path_destino, "w", encoding="ASCII") as f:
-            f.write("DEPTH = 256;\n") * int(len(traduction))
+            depth: int = len(traduction) * 256
+            f.write(f"DEPTH = {depth};\n") * int(len(traduction))
             f.write("WIDTH = 32;\n")
             f.write("ADDRESS_RADIX = HEX;\n")
             f.write("DATA_RADIX = HEX;\n")
