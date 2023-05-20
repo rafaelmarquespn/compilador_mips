@@ -1332,7 +1332,7 @@ class Compiler(Translator):
 if __name__ == "__main__":
     #path = input("Digite o caminho do arquivo(root\\\example_entrada.asm):\t\t")
     #path_destino = input("Digite o caminho do arquivo de destino(root\\\example_saida.mif):\t\t")
-    path = "D:\\developer\\projetos\\OAC-MIPS\\app\\archives\\exemplos\\example_saida.asm"
+    path = "D:\\developer\\projetos\\OAC-MIPS\\archives\\exemplos\\example_saida.asm"
     path_destino = "D:\\developer\\projetos\\OAC-MIPS\\tests\\archives\\saida1.mif"
     compiled = Compiler(path, path_destino)
     
