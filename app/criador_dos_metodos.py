@@ -1,6 +1,10 @@
-
-
-
+"""
+Nome do arquivo: criador_dos_metodos.py
+Propósito: cria metodos , e cases automaticamente
+Autor: Rafael Marques , Aysamake trentin
+Data de criação: 19/05/2023
+Versão: Versão 1.0
+"""
 def ordem_alfabetica():
     with open('app\\archives\\exemplos_in.txt', 'r') as f :
         i = f.readlines()
