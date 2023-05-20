@@ -1,3 +1,11 @@
+"""
+Nome do arquivo: MIPS.py
+Propósito: Compilador assembly mips com 61 instrucoes
+Autor: Rafael Marques, Aysamake Trentin
+Data de criação: 19/05/2023
+Versão: Versão 1.0
+"""
+
 class FloatRegisters:
     """
     Classe que define os registradores de ponto flutuante.
@@ -1299,7 +1307,8 @@ class Compiler(Translator):
         Returns:
             None
         """
-
+        path_destino: str = self.path_destino
+        
         traduction: list[str] = self.text
         contador: int = 0
         with open(path_destino, "w", encoding="ASCII") as f:
@@ -1329,12 +1338,7 @@ class Compiler(Translator):
     
     
 
-if __name__ == "__main__":
-    #path = input("Digite o caminho do arquivo(root\\\example_entrada.asm):\t\t")
-    #path_destino = input("Digite o caminho do arquivo de destino(root\\\example_saida.mif):\t\t")
-    path = "D:\\developer\\projetos\\OAC-MIPS\\archives\\exemplos\\example_saida.asm"
-    path_destino = "D:\\developer\\projetos\\OAC-MIPS\\tests\\archives\\saida1.mif"
-    compiled = Compiler(path, path_destino)
+
     
 
 
