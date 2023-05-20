@@ -259,7 +259,7 @@ class Translator(Registers):
     Herda da classe Registers.
 
     Args:
-        text (str): O texto da instrução.
+        text (list): O texto da instrução.
         instrução (str): A instrução a ser traduzida.
         registradores (str): Os registradores a serem utilizados.
 
@@ -279,12 +279,12 @@ class Translator(Registers):
         fd (str): Registrador origem 2 ponto flutuante.
     """
 
-    def __init__(self, text: str, instrução: str, registradores: str) -> None:
+    def __init__(self, text: list, instrução: str, registradores: str) -> None:
         """
         Inicializa uma nova instância da classe Translator.
 
         Args:
-            text (str): O texto da instrução.
+            text (list): O texto da instrução.
             instrução (str): A instrução a ser traduzida.
             registradores (str): Os registradores a serem utilizados.
         """
@@ -1355,7 +1355,8 @@ class Compiler(Translator):
             f.close()
         return print(f"Arquivo compilado com sucesso!    \n" + path_destino)
 
-        
+    def write_mif_data():
+        pass
     
 
 if __name__ == "__main__":
@@ -1366,7 +1367,9 @@ if __name__ == "__main__":
     compiled = Compiler(path, path_destino)
 
 
-    
+#TODO: funcao LI
+#TODO: METODO write_mif_data
+
 
 
 
