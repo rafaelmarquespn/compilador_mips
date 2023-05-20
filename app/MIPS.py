@@ -565,7 +565,7 @@ class Translator(Registers):
         registrador = self.registradores.split(", ")                        
         opcode = "010001"                        
         fmt = "10001"                                                
-        exec(f"self.ft = self.{registrador[0]}")                        
+        exec(f"self.ft = self.{registrador[2]}")                        
         exec(f"self.fs = self.{registrador[1]}")                         
         exec(f"self.fd = self.{registrador[0]}")                         
         funct = "000010"                        
