@@ -936,9 +936,26 @@ class Compiler(Translator):
         self.data: list[str] = list()
         self.text: list[str] = list()
         self.text_hexa: list[str] = list()
+        self.linha: list[str] = list()
         self.load_file()
         self.translate_text()
 
+    def is_label(self, linha: str) -> None:
+        """
+        Verifica se a linha atual é uma label.
+
+        Returns:
+        None
+        """
+        if ":" in linha:
+                label, instrucao, registradores = linha.split(" ", 2)
+                instrucao = instrucao.replace('.', '_')
+        else:
+            instrucao, registradores = linha.split(" ", 1)
+            instrucao = instrucao.replace('.', '_')
+        self.linha = [instrucao, registradores]
+        return 
+    
     def read_file(self) -> list[str]:
         """
         Lê o arquivo de assembly e retorna uma lista com as linhas lidas.
@@ -987,9 +1004,10 @@ class Compiler(Translator):
         """
         text: list[str] = self.text
         translated: list[str] = list()
-        for i in text:
-            instrucao, registradores = i.split(" ", 1)
-            instrucao = instrucao.replace('.', '_')
+        for linha in text:
+            self.is_label(linha)
+            instrucao, registradores = self.linha[0], self.linha[1]
+
             match instrucao:
                 case 'add_d':
                     translator: Translator = Translator(text, instrucao, registradores)
@@ -1339,7 +1357,13 @@ class Compiler(Translator):
 
         
     
-    
+
+if __name__ == "__main__":
+    #path = input("Digite o caminho do arquivo(path = "/home/usuario/projeto/arquivo.asm"):\t\t")
+    #path_destino = input("Digite o caminho do arquivo de destino(path = "/home/usuario/projeto/arquivo.mif"):\t\t")
+    path = "D:\\developer\\projetos\\OAC-MIPS\\archives\\exemplos\\example_saida.asm"
+    path_destino = "D:\\developer\\projetos\\OAC-MIPS\\tests\\archives\\saida1.mif"
+    compiled = Compiler(path, path_destino)
 
 
     
