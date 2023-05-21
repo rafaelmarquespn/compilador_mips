@@ -149,13 +149,13 @@ class Registers(FloatRegisters):
         """
         imediato = str(imediato)
         if '-' in imediato:
-            im_positivo =  bin(int(imediato))[2:].zfill(16)
+            im_positivo =  bin(int(imediato))[2:].replace('b', '0').zfill(16)
             im_negativo = int(1111111111111111) - int(im_positivo)
             return str(im_negativo)
         else:
             return bin(int(imediato))[2:].zfill(16)
 
-    def zero(self, registers:str):
+    def zero(self):
         return "00000"
     
     def at(self):
@@ -313,9 +313,8 @@ class Translator(Registers):
             str: O valor binário do rótulo, preenchido com 16 dígitos.
         """
         for i in self.text:
-            i = i.replace(':', '')
-            if label == i:
-                return bin((int(self.text.index(f'{i}:')) + 1) * 4)[2:].zfill(16)
+            if label in i:
+                return bin((int(self.text.index(f'{i}')) + 1) * 4)[2:].zfill(16)
             
     def offset(self, endereço: str) -> str:
         """
@@ -330,7 +329,7 @@ class Translator(Registers):
         offset, registrador = endereço.split('(')
         registrador = registrador.replace(')', '')
         offset = self.imm(offset)
-        self.base = getattr(self, registrador[0])()
+        self.base = getattr(self, registrador)()
         return offset
 
     def sa(self, sa: str) -> str:
@@ -353,9 +352,9 @@ class Translator(Registers):
         registrador = self.registradores.split(", ")                        
         opcode = "010001"                        
         fmt = "10001"                                                
-        self.ft = getattr(self, registrador[2])
-        self.fs = getattr(self, registrador[1])
-        self.fd = getattr(self, registrador[0])
+        self.ft = getattr(self, registrador[2])()
+        self.fs = getattr(self, registrador[1])()
+        self.fd = getattr(self, registrador[0])()
         funct = "000000"                        
         return hex(int((opcode + fmt + self.ft + self.fs + self.fd + funct), 2))
 
@@ -363,9 +362,9 @@ class Translator(Registers):
         registrador = self.registradores.split(", ")                        
         opcode = "010001"                        
         fmt = "10001"                                                
-        self.ft = getattr(self, registrador[2])
-        self.fs = getattr(self, registrador[1])
-        self.fd = getattr(self, registrador[0])
+        self.ft = getattr(self, registrador[2])()
+        self.fs = getattr(self, registrador[1])()
+        self.fd = getattr(self, registrador[0])()
         funct = "000000"                        
         return hex(int((opcode + fmt + self.ft + self.fs + self.fd + funct), 2))
 
@@ -495,15 +494,15 @@ class Translator(Registers):
         opcode = "000100"
         self.rs = getattr(self, registrador[0])()
         self.rt = getattr(self, registrador[1])()
-        self.label = self.labels(getattr(self, registrador[2])())
+        self.label = self.labels(registrador[2])
         return hex(int((opcode + self.rs + self.rt + self.label), 2))
     
     def bne(self):                        
         registrador = self.registradores.split(", ")                        
         opcode = "000101"                        
-        exec(f"self.rs = self.{registrador[0]}()")                        
-        exec(f"self.rt = self.{registrador[1]}()")                        
-        exec(f"self.label = self.labels({registrador[2]})")                                                
+        self.rs = getattr(self, registrador[0])()
+        self.rt = getattr(self, registrador[1])()
+        self.label = self.labels(registrador[2])                                             
         return hex(int((opcode + self.rs + self.rt + self.label),2))
 
     def bgez(self):
@@ -511,7 +510,7 @@ class Translator(Registers):
         opcode = "000001"
         self.rs = getattr(self, registrador[0])()
         rt = "00001"
-        self.label = self.labels(getattr(self, registrador[1])())
+        self.label = self.labels(registrador[1])
         return hex(int((opcode + self.rs + rt + self.label), 2))
 
     def bgezal(self):
@@ -519,15 +518,15 @@ class Translator(Registers):
         opcode = "000001"
         self.rs = getattr(self, registrador[0])()
         rt = "10001"
-        self.label = self.labels(getattr(self, registrador[1])())
+        self.label = self.labels(registrador[1])
         return hex(int((opcode + self.rs + rt + self.label), 2))
 
     def c_eq_d(self):
         registrador = self.registradores.split(", ")
         opcode = "010001"
         fmt = "10001"
-        self.fs = getattr(self, registrador[0])
-        self.ft = getattr(self, registrador[1])
+        self.fs = getattr(self, registrador[0])()
+        self.ft = getattr(self, registrador[1])()
         etc = "0011"
         cond = "0010"
         funct = "101001"
@@ -537,8 +536,8 @@ class Translator(Registers):
         registrador = self.registradores.split(", ")
         opcode = "010001"
         fmt = "10000"
-        self.fs = getattr(self, registrador[0])
-        self.ft = getattr(self, registrador[1])
+        self.fs = getattr(self, registrador[0])()
+        self.ft = getattr(self, registrador[1])()
         etc = "0011"
         cond = "0010"
         funct = "101000"
@@ -568,9 +567,9 @@ class Translator(Registers):
         registrador = self.registradores.split(", ")
         opcode = "010001"
         fmt = "10001"
-        self.ft = getattr(self, registrador[2])
-        self.fs = getattr(self, registrador[1])
-        self.fd = getattr(self, registrador[0])
+        self.ft = getattr(self, registrador[2])()
+        self.fs = getattr(self, registrador[1])()
+        self.fd = getattr(self, registrador[0])()
         funct = "000011"
         return hex(int((opcode + fmt + self.ft + self.fs + self.fd + funct), 2))
 
@@ -578,28 +577,28 @@ class Translator(Registers):
         registrador = self.registradores.split(", ")
         opcode = "010001"
         fmt = "10000"
-        self.ft = getattr(self, registrador[2])
-        self.fs = getattr(self, registrador[1])
-        self.fd = getattr(self, registrador[0])
+        self.ft = getattr(self, registrador[2])()
+        self.fs = getattr(self, registrador[1])()
+        self.fd = getattr(self, registrador[0])()
         funct = "000011"
         return hex(int((opcode + fmt + self.ft + self.fs + self.fd + funct), 2))
     
     def j(self):
         registrador = self.registradores.split(", ")
         opcode = "000010"
-        self.label = self.labels(getattr(self, registrador[0])())
+        self.label = self.labels(registrador[0])
         return hex(int((opcode + self.label.zfill(26)), 2))
 
     def jal(self):
         registrador = self.registradores.split(", ")
         opcode = "000011"
-        self.label = self.labels(getattr(self, registrador[0])())
+        self.label = self.labels(registrador[0])
         return hex(int((opcode + self.label.zfill(26)), 2))
 
     def jalr(self):
         registrador = self.registradores.split(", ")
         opcode = "000000"
-        self.rs = getattr(self, registrador[1])()
+        self.rs = getattr(self, registrador[0])()
         rt = "00000"
         self.rd = getattr(self, registrador[0])()
         shamt = "00000"
@@ -730,9 +729,9 @@ class Translator(Registers):
         registrador = self.registradores.split(", ")
         opcode = "010001"
         fmt = "10001"
-        self.ft = getattr(self, registrador[2])
-        self.fs = getattr(self, registrador[1])
-        self.fd = getattr(self, registrador[0])
+        self.ft = getattr(self, registrador[2])()
+        self.fs = getattr(self, registrador[1])()
+        self.fd = getattr(self, registrador[0])()
         funct = "000010"
         return hex(int((opcode + fmt + self.ft + self.fs + self.fd + funct), 2))
 
@@ -740,11 +739,11 @@ class Translator(Registers):
         registrador = self.registradores.split(", ")
         opcode = "010001"
         fmt = "10000"
-        self.__ft = getattr(self, registrador[2])
-        self.__fs = getattr(self, registrador[1])
-        self.__fd = getattr(self, registrador[0])
+        self.ft = getattr(self, registrador[2])()
+        self.fs = getattr(self, registrador[1])()
+        self.fd = getattr(self, registrador[0])()
         funct = "000010"
-        return hex(int((opcode + fmt + self.__ft + self.__fs + self.__fd + funct), 2))
+        return hex(int((opcode + fmt + self.ft + self.fs + self.fd + funct), 2))
 
     def mult(self):
         registrador = self.registradores.split(", ")
@@ -839,7 +838,7 @@ class Translator(Registers):
         self.fd = getattr(self, registrador[0])()
         fmt = "10001"
         funct = "000001"
-        return hex(int((opcode + self.__ft + self.__fs + self.__fd + fmt + funct), 2))
+        return hex(int((opcode + self.ft + self.fs + self.fd + fmt + funct), 2))
 
     def sub_s(self):
         registrador = self.registradores.split(", ")
@@ -881,22 +880,17 @@ class Translator(Registers):
         opcode = "000001"
         self.rs = getattr(self, registrador[0])()
         tgei = "01000"
-        imm = ""
         self.imediato = self.imm(registrador[1])
         return hex(int((opcode + self.rs + tgei + self.imediato), 2))
 
-    def u(self):
+    def tgeu(self):
         registrador = self.registradores.split(", ")
         opcode = "000000"
-        rs = ""
-        rs = getattr(self, registrador[0])
-        rt = ""
-        rt = getattr(self, registrador[1])
-        rd = ""
-        rd = getattr(self, registrador[2])
-        shamt = ""
+        self.rs = getattr(self, registrador[0])()
+        self.rt = getattr(self, registrador[1])()
+        code = "0000000000"
         funct = "110001"
-        return hex(int((opcode + rs + rt + rd + shamt + funct), 2))
+        return hex(int((opcode + self.rs + self.rt + code + funct), 2))
 
     def tne(self):
         registrador = self.registradores.split(", ")
@@ -1183,7 +1177,7 @@ class Compiler(Translator):
                     traduction = translator.lui()                         
                     translated.append(traduction)
                     reg = registradores.split(', ')[0]
-                    registrador = reg + '$at' + ', 0'
+                    registrador = reg + ', $at' + ', 0'
                     translator = Translator(text, instrucao, registrador)
                     traduction = translator.ori()
                     translated.append(traduction)
@@ -1313,9 +1307,9 @@ class Compiler(Translator):
                     traduction = translator.tgei()                         
                     translated.append(traduction) 
 
-                case 'u':                         
+                case 'tgeu':                         
                     translator = Translator(text, instrucao, registradores)
-                    traduction = translator.u()                         
+                    traduction = translator.tgeu()                         
                     translated.append(traduction) 
 
                 case 'tne':                         
@@ -1442,7 +1436,7 @@ class Compiler(Translator):
 if __name__ == "__main__":
     #path = input("Digite o caminho do arquivo(path = "/home/usuario/projeto/arquivo.asm"):\t\t")
     #path_destino = input("Digite o nome do arquivo de destino, sem extensao ("saida_teste1"):\t\t")
-    path = "C:\\Users\\arttr\\compilador-oac\\compilador_mips\\archives\\exemplos\\ex_geral.asm"
+    path = "D:\\developer\\projetos\\OAC-MIPS\\archives\\exemplos\\ex_geral.asm"
     path_destino = "saida1"
     compiled = Compiler(path, path_destino)
 

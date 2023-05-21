@@ -1,6 +1,6 @@
 .data
-num1:   .word   10      
-num2:   .word   20      
+num1: .word   10      
+num2: .word   20      
 result: .word   0       
 
 .text
@@ -9,8 +9,8 @@ lw $t1, 12($t2)
 add $t2, $t0, $t1  
 sw $t2, 0($zero)     
 li $v0, 10
-add.d $f0, $f2
-LABEL: add.s $f1, $f2
+add.d $f0, $f2, $f3
+LABEL: add.s $f1, $f2, $f3
 add $t0, $s2, $t0
 sub $t0, $s2, $t0
 and $t0, $s2, $t0
@@ -21,7 +21,7 @@ addi $t2, $t3, -10
 andi $t2, $t3, -10
 ori $t2, $t3, -10
 xori $t2, $t3, -10
-addiu $t1, $t2, $t3
+addiu $t1, $t2, 10
 addu $t1, $t2, $t3
 subu $t1, $t2, $t3
 beq $t1, $zero, LABEL
