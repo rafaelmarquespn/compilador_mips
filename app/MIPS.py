@@ -652,10 +652,11 @@ class Translator(Registers):
 
     def lui(self):
         registrador = self.registradores.split(", ")
+        imediato = int(registrador[1], 16)
         opcode = "001111"
         rs = "00000"
         self.rt = getattr(self, registrador[0])()
-        self.imediato = self.imm(registrador[1])
+        self.imediato = self.imm(imediato)
         return hex(int((opcode + rs + self.rt + self.imediato), 2))
 
     def lw(self):
@@ -931,10 +932,12 @@ class Compiler(Translator):
         """
         import os
 
+        diretorio = os.path.dirname(path)
+        nome_arquivo = os.path.basename(path)
+        self.path: str = os.path.join(diretorio, nome_arquivo)
+
         file_path = os.path.abspath(__file__)
         directory = os.path.dirname(file_path)
-
-        self.path: str = path
         self.path_destino: str = os.path.join(directory, arquivo_destino)
 
         self.asm: list[str] = list()
@@ -1177,8 +1180,13 @@ class Compiler(Translator):
 
                 case 'li':                         
                     translator = Translator(text, instrucao, registradores)
-                    traduction = translator.li()                         
-                    translated.append(traduction) 
+                    traduction = translator.lui()                         
+                    translated.append(traduction)
+                    reg = registradores.split(', ')[0]
+                    registrador = reg + '$at' + ', 0'
+                    translator = Translator(text, instrucao, registrador)
+                    traduction = translator.ori()
+                    translated.append(traduction)
 
                 case 'lui':                         
                     translator = Translator(text, instrucao, registradores)
@@ -1438,9 +1446,6 @@ if __name__ == "__main__":
     path_destino = "saida1"
     compiled = Compiler(path, path_destino)
 
-
-#TODO: funcao LI
-#TODO: METODO write_mif_data
 
 
 
