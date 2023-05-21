@@ -67,6 +67,6 @@ sw $t0, 120($s3)
 teq $t1, $t2
 tge $t1, $t2
 tgei $t1, -100
-u $t1, -100
+tgeu $t1, -100
 tne $t1, $t2
 tnei $t1, -100

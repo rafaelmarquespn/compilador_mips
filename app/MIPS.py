@@ -748,12 +748,12 @@ class Translator(Registers):
     def mult(self):
         registrador = self.registradores.split(", ")
         opcode = "000000"
-        self.__rs = getattr(self, registrador[0])()
-        self.__rt = getattr(self, registrador[1])()
+        self.rs = getattr(self, registrador[0])()
+        self.rt = getattr(self, registrador[1])()
         rd = "00000"
         shamt = "00000"
         funct = "011000"
-        return hex(int((opcode + self.__rs + self.__rt + rd + shamt + funct), 2))
+        return hex(int((opcode + self.rs + self.rt + rd + shamt + funct), 2))
 
     def sb(self):
         registrador = self.registradores.split(", ")
@@ -766,18 +766,18 @@ class Translator(Registers):
         registrador = self.registradores.split(", ")
         opcode = "000000"
         rs = "00000"
-        self.__rt = getattr(self, registrador[1])()
-        self.__rd = getattr(self, registrador[0])()
+        self.rt = getattr(self, registrador[1])()
+        self.rd = getattr(self, registrador[0])()
         sa = self.sa(registrador[2])
         funct = "000000"
-        return hex(int((opcode + rs + self.__rt + self.__rd + sa + funct), 2))
+        return hex(int((opcode + rs + self.rt + self.rd + sa + funct), 2))
 
     def srl(self):
         registrador = self.registradores.split(", ")
         opcode = "000000"
         rs = "00000"
-        self.__rt = getattr(self, registrador[1])()
-        self.__rd = getattr(self, registrador[0])()
+        self.rt = getattr(self, registrador[1])()
+        self.rd = getattr(self, registrador[0])()
         sa = self.sa(registrador[2])
         funct = "000010"                
         return hex(int((opcode + rs + self.rt + self.rd + sa + funct),2))
@@ -785,50 +785,50 @@ class Translator(Registers):
     def slt(self):
         registrador = self.registradores.split(", ")
         opcode = "000000"
-        self.__rs = getattr(self, registrador[1])()
-        self.__rt = getattr(self, registrador[2])()
-        self.__rd = getattr(self, registrador[0])()
+        self.rs = getattr(self, registrador[1])()
+        self.rt = getattr(self, registrador[2])()
+        self.rd = getattr(self, registrador[0])()
         shamt = "00000"
         funct = "101010"
-        return hex(int((opcode + self.__rs + self.__rt + self.__rd + shamt + funct), 2))
+        return hex(int((opcode + self.rs + self.rt + self.rd + shamt + funct), 2))
 
     def slti(self):
         registrador = self.registradores.split(", ")
         opcode = "001010"
-        self.__rs = getattr(self, registrador[1])()
-        self.__rt = getattr(self, registrador[0])()
-        self.__imediato = self.imm(registrador[2])
-        return hex(int((opcode + self.__rs + self.__rt + self.__imediato), 2))
+        self.rs = getattr(self, registrador[1])()
+        self.rt = getattr(self, registrador[0])()
+        self._imediato = self.imm(registrador[2])
+        return hex(int((opcode + self.rs + self.rt + self._imediato), 2))
 
     def sltu(self):
         registrador = self.registradores.split(", ")
         opcode = "000000"
-        self.__rs = getattr(self, registrador[1])()
-        self.__rt = getattr(self, registrador[1])()
-        self.__rd = getattr(self, registrador[0])()
+        self.rs = getattr(self, registrador[1])()
+        self.rt = getattr(self, registrador[1])()
+        self.rd = getattr(self, registrador[0])()
         shamt = "00000"
         funct = "101011"
-        return hex(int((opcode + self.__rs + self.__rt + self.__rd + shamt + funct), 2))
+        return hex(int((opcode + self.rs + self.rt + self.rd + shamt + funct), 2))
 
     def sra(self):
         registrador = self.registradores.split(", ")
         opcode = "000000"
         rs = "00000"
-        self.__rt = getattr(self, registrador[1])()
-        self.__rd = getattr(self, registrador[0])()
+        self.rt = getattr(self, registrador[1])()
+        self.rd = getattr(self, registrador[0])()
         sa = self.sa(registrador[2])
         funct = "000011"
-        return hex(int((opcode + rs + self.__rt + self.__rd + sa + funct), 2))
+        return hex(int((opcode + rs + self.rt + self.rd + sa + funct), 2))
 
     def srav(self):
         registrador = self.registradores.split(", ")
         opcode = "000000"
-        self.__rs = getattr(self, registrador[1])()
-        self.__rt = getattr(self, registrador[2])()
-        self.__rd = getattr(self, registrador[0])()
+        self.rs = getattr(self, registrador[1])()
+        self.rt = getattr(self, registrador[2])()
+        self.rd = getattr(self, registrador[0])()
         shamt = "000000"
         funct = "000111"
-        return hex(int((opcode + self.__rs + self.__rt + self.__rd + shamt + funct), 2))
+        return hex(int((opcode + self.rs + self.rt + self.rd + shamt + funct), 2))
 
     def sub_d(self):
         registrador = self.registradores.split(", ")
@@ -887,7 +887,7 @@ class Translator(Registers):
         registrador = self.registradores.split(", ")
         opcode = "000000"
         self.rs = getattr(self, registrador[0])()
-        self.rt = getattr(self, registrador[1])()
+        self.imediato = self.imm(registrador[1])
         code = "0000000000"
         funct = "110001"
         return hex(int((opcode + self.rs + self.rt + code + funct), 2))
@@ -1326,6 +1326,26 @@ class Compiler(Translator):
         return self.write_mif_text()
 
     def translate_data(self) -> None:
+        """
+        Translates data in the assembly file to hexadecimal format.
+    
+        This method translates specific data sections in the assembly file to their corresponding hexadecimal representation.
+        It supports three types of data: '.word', '.ascii', and '.float'.
+        
+        Args:
+            self: The object instance.
+        
+        Returns:
+            None
+        
+        Raises:
+            None
+
+        Examples:
+            # Example usage of translate_data()
+            obj = MyClass()
+            obj.translate_data()
+        """
         data = self.data
         translated = []
         for line in data:
@@ -1394,9 +1414,9 @@ class Compiler(Translator):
             f.write("\n")
             f.write( "END ;\n")
             f.close()
-        return print(f"Arquivo compilado com sucesso!    \n" + path_destino)
+        return print(f"Caminho do arquivo:    \n\t\t\t" + path_destino +'_text.mif')
 
-    def write_mif_data(self):
+    def write_mif_data(self) -> None:
         """
         Escreve o arquivo de saída em formato MIF (Memory Initialization File).
 
@@ -1430,19 +1450,13 @@ class Compiler(Translator):
             f.write("\n")
             f.write( "END ;\n")
             f.close()
-        return print(f"Arquivo compilado com sucesso!    \n" + path_destino)
+        return print(f"Caminho do arquivo:    \n\t\t\t" + path_destino +'_data.mif') 
   
 
 if __name__ == "__main__":
-    #path = input("Digite o caminho do arquivo(path = "/home/usuario/projeto/arquivo.asm"):\t\t")
-    #path_destino = input("Digite o nome do arquivo de destino, sem extensao ("saida_teste1"):\t\t")
-    path = "D:\\developer\\projetos\\OAC-MIPS\\archives\\exemplos\\ex_geral.asm"
-    path_destino = "saida1"
+    path = input("Digite o caminho do arquivo(path = '/home/usuario/projeto/arquivo.asm'):\t\t")
+    path_destino = input("Digite o nome do arquivo de destino, sem extensao ('saida_teste1'):\t\t\t")
+    #path = "D:/developer/projetos/OAC-MIPS/archives/exemplos/ex_geral.asm"
+    #path_destino = "saida1"
     compiled = Compiler(path, path_destino)
-
-
-
-
-
-
 
