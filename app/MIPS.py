@@ -922,15 +922,20 @@ class Compiler(Translator):
 
     """
 
-    def __init__(self, path: str, path_destino: str):
+    def __init__(self, path: str, arquivo_destino: str):
         """
         Inicializa a classe Compiler.
 
         Args:
             path (str): O caminho do arquivo a ser compilado.
         """
+        import os
+
+        file_path = os.path.abspath(__file__)
+        directory = os.path.dirname(file_path)
+
         self.path: str = path
-        self.path_destino: str = path_destino
+        self.path_destino: str = os.path.join(directory, arquivo_destino)
 
         self.asm: list[str] = list()
         self.data: list[str] = list()
@@ -939,6 +944,7 @@ class Compiler(Translator):
         self.linha: list[str] = list()
         self.load_file()
         self.translate_text()
+        self.translate_data()
 
     def is_label(self, linha: str) -> None:
         """
@@ -1317,6 +1323,40 @@ class Compiler(Translator):
         self.text = translated
         return self.write_mif_text()
 
+    def translate_data(self) -> None:
+        data = self.data
+        translated = []
+        for line in data:
+            if  '.word' in line:
+                line = line.split(' ', 2)[2]
+                line = line.split(', ')
+                for word in line:
+                    word = hex(int(word))
+                    word = word.replace('x', '0').zfill(8)
+                    translated.append(word)
+                    
+            elif '.ascii' in line:
+                line = line.split(' ', 2)[2]
+                line = line.split(', ')
+                hex_text = ''
+                for text in line:
+                    for char in text:
+                        hex_value = hex(ord(char))[2:]  # Obtém o valor hexadecimal sem o prefixo "0x"
+                        hex_text += hex_value
+                    translated.append(hex_text)
+
+            elif '.float' in line:
+                import struct
+                line = line.split(' ', 2)[2]
+                line = line.split(', ')
+                for num in line:
+                    packed = struct.pack('!f', num)
+                    hex_value = ''.join('{:02x}'.format(b) for b in packed)                
+                    translated.append(hex_value)
+
+        self.data = translated
+        return self.write_mif_data()
+
     def write_mif_text(self) -> None:
         """
         Escreve o arquivo de saída em formato MIF (Memory Initialization File).
@@ -1328,10 +1368,9 @@ class Compiler(Translator):
             None
         """
         path_destino: str = self.path_destino
-
         traduction: list[str] = self.text
         contador: int = 0
-        with open(path_destino, "w", encoding="ASCII") as f:
+        with open(path_destino + "_text.mif", "w", encoding="ASCII") as f:
             depth: int = len(traduction) * 256
             f.write(f"DEPTH = {depth};\n") * int(len(traduction))
             f.write("WIDTH = 32;\n")
@@ -1355,15 +1394,48 @@ class Compiler(Translator):
             f.close()
         return print(f"Arquivo compilado com sucesso!    \n" + path_destino)
 
-    def write_mif_data():
-        pass
-    
+    def write_mif_data(self):
+        """
+        Escreve o arquivo de saída em formato MIF (Memory Initialization File).
+
+        Args:
+            path_destino (str): O caminho de destino para o arquivo MIF.
+
+        Returns:
+            None
+        """
+        path_destino: str = self.path_destino
+        traduction: list[str] = self.data
+        contador: int = 0
+        with open(path_destino + "_data.mif", "w", encoding="ASCII") as f:
+            depth: int = len(traduction) * 256
+            f.write(f"DEPTH = {depth};\n") * int(len(traduction))
+            f.write("WIDTH = 32;\n")
+            f.write("ADDRESS_RADIX = HEX;\n")
+            f.write("DATA_RADIX = HEX;\n")
+            f.write("CONTENT\n")
+            f.write("BEGIN\n")
+            f.write("\n")
+            
+            for i in range(len(traduction)):
+                linha_hexa: str = hex(contador)
+                linha_hexa = linha_hexa.split("x")[1]
+                linha_hexa= linha_hexa.zfill(8)
+                instrucao = traduction[i]
+                f.write(str(linha_hexa) + " : " + instrucao + ";\n")
+                contador += 1
+
+            f.write("\n")
+            f.write( "END ;\n")
+            f.close()
+        return print(f"Arquivo compilado com sucesso!    \n" + path_destino)
+  
 
 if __name__ == "__main__":
     #path = input("Digite o caminho do arquivo(path = "/home/usuario/projeto/arquivo.asm"):\t\t")
-    #path_destino = input("Digite o caminho do arquivo de destino(path = "/home/usuario/projeto/arquivo.mif"):\t\t")
+    #path_destino = input("Digite o nome do arquivo de destino, sem extensao ("saida_teste1"):\t\t")
     path = "D:\\developer\\projetos\\OAC-MIPS\\archives\\exemplos\\example_saida.asm"
-    path_destino = "D:\\developer\\projetos\\OAC-MIPS\\tests\\archives\\saida1.mif"
+    path_destino = "saida1"
     compiled = Compiler(path, path_destino)
 
 
