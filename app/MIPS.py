@@ -330,7 +330,7 @@ class Translator(Registers):
         offset, registrador = endereço.split('(')
         registrador = registrador.replace(')', '')
         offset = self.imm(offset)
-        self.base = getattr(self, registrador)()
+        self.base = getattr(self, registrador[0])()
         return offset
 
     def sa(self, sa: str) -> str:
@@ -1434,7 +1434,7 @@ class Compiler(Translator):
 if __name__ == "__main__":
     #path = input("Digite o caminho do arquivo(path = "/home/usuario/projeto/arquivo.asm"):\t\t")
     #path_destino = input("Digite o nome do arquivo de destino, sem extensao ("saida_teste1"):\t\t")
-    path = "D:\\developer\\projetos\\OAC-MIPS\\archives\\exemplos\\example_saida.asm"
+    path = "C:\\Users\\arttr\\compilador-oac\\compilador_mips\\archives\\exemplos\\ex_geral.asm"
     path_destino = "saida1"
     compiled = Compiler(path, path_destino)
 
