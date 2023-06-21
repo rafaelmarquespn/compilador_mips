@@ -11,7 +11,14 @@ clo $t1, $t2
 add $t1, $t2, $t3
 xor $t4, $t1, $t2
 addi $t5, $t4, 10
-xori $t6, $t5, 20
+xori $t6, $t5, 200
+addi $t2, $t3, 10
+andi $t2, $t3, 10
+ori $t2, $t3, 10
+xori $t2, $t3, 10
+addiu $t1, $t2, 10
+addu $t1, $t2, $t3
+subu $t1, $t2, $t3
 sw $t4, 0($t0)
 sw $t5, 4($t0)
 sw $t6, 8($t0)

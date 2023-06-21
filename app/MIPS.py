@@ -474,6 +474,7 @@ class Translator(Registers):
         self.rs = getattr(self, registrador[1])()
         self.rt = getattr(self, registrador[0])()
         self.imediato = Registers.imm(registrador[2])
+        
         return hex(int((opcode + self.rs + self.rt + self.imediato), 2))
 
     def addiu(self):
@@ -1499,8 +1500,8 @@ class Assembler(Translator):
 if __name__ == "__main__":
     # path = input("Digite o caminho do arquivo(path = '/home/usuario/projeto/arquivo.asm'):\t\t")
     # path_destino = input("Digite o nome do arquivo de destino, sem extensao ('saida_teste1'):\t\t\t")
-    path = "D:/developer/projetos/OAC-MIPS/archives/exemplos/exemplo_teste.asm"
-    path_destino = "saida1"
+    path = "C:\\dev1\\Projetos\\oac-mips\\compilador_mips\\archives\\exemplos\\exemplo_teste.asm"
+    path_destino = "saida_teste1"
     compiled = Assembler(path, path_destino)
 
 
