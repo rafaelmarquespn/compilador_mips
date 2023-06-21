@@ -137,8 +137,6 @@ class Registers(FloatRegisters):
 
     """
 
-
-
     def imm(imediato: str) -> str:
         """
         Converte o valor imediato para sua representação binária de 16 bits.
@@ -474,7 +472,7 @@ class Translator(Registers):
         self.rs = getattr(self, registrador[1])()
         self.rt = getattr(self, registrador[0])()
         self.imediato = Registers.imm(registrador[2])
-        
+
         return hex(int((opcode + self.rs + self.rt + self.imediato), 2))
 
     def addiu(self):
@@ -1365,7 +1363,7 @@ class Assembler(Translator):
                             pass
                         else:
                             raise Exception('Instrução não suportada')
-
+        self.text_hexa = text
         self.text = translated
         return self.write_mif_text()
 
@@ -1437,6 +1435,36 @@ class Assembler(Translator):
         traduction: list[str] = self.text
         contador: int = 0
         with open(path_destino + "_text.mif", "w", encoding="ASCII") as f:
+            depth: int = len(traduction) * 4
+            f.write(f"DEPTH = {depth};\n")
+            f.write("WIDTH = 32;\n")
+            f.write("ADDRESS_RADIX = HEX;\n")
+            f.write("DATA_RADIX = HEX;\n")
+            f.write("CONTENT\n")
+            f.write("BEGIN\n")
+            f.write("\n")
+            
+            for i in range(len(traduction)):
+                linha_hexa: str = hex(contador)
+                linha_hexa = linha_hexa.split("x")[1]
+                linha_hexa= linha_hexa.zfill(8)
+                instrucao = traduction[i]
+                instrucao = instrucao.split("x")[1].zfill(8)
+                f.write(str(linha_hexa) + " : " + instrucao + ";\n")
+                contador += 4
+
+            f.write("\n")
+            f.write( "END ;\n")
+            f.close()
+        return print(f"Caminho do arquivo:    \n\t\t\t" + path_destino +'_text.mif')
+    
+    def write_txt_text(self) -> None:
+        import os
+        path_destino: str = self.path_destino
+        traduction: list[str] = self.text
+        text = self.text_hexa
+        contador: int = 0
+        with open(path_destino + "_text.txt", "w", encoding="ASCII") as f:
             depth: int = len(traduction) * 256
             f.write(f"DEPTH = {depth};\n") * int(len(traduction))
             f.write("WIDTH = 32;\n")
@@ -1458,7 +1486,10 @@ class Assembler(Translator):
             f.write("\n")
             f.write( "END ;\n")
             f.close()
-        return print(f"Caminho do arquivo:    \n\t\t\t" + path_destino +'_text.mif')
+        file_path =  path_destino + "_text.txt"
+        abrir_arquivo = os.system(file_path)
+        return abrir_arquivo
+
 
     def write_mif_data(self) -> None:
         """
@@ -1503,6 +1534,7 @@ if __name__ == "__main__":
     path = "C:\\dev1\\Projetos\\oac-mips\\compilador_mips\\archives\\exemplos\\exemplo_teste.asm"
     path_destino = "saida_teste1"
     compiled = Assembler(path, path_destino)
+    compiled.write_txt_text()
 
 
 #TODO 
