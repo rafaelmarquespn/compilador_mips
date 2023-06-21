@@ -137,7 +137,9 @@ class Registers(FloatRegisters):
 
     """
 
-    def imm(self, imediato: str) -> str:
+
+
+    def imm(imediato: str) -> str:
         """
         Converte o valor imediato para sua representação binária de 16 bits.
 
@@ -148,12 +150,25 @@ class Registers(FloatRegisters):
             str: O valor imediato convertido para sua representação binária de 16 bits.
         """
         imediato = str(imediato)
-        if '-' in imediato:
-            im_positivo =  bin(int(imediato))[2:].replace('b', '0').zfill(16)
-            im_negativo = int(1111111111111111) - int(im_positivo)
-            return str(im_negativo)
+        
+        if 'x' in imediato:
+            imediato = bin(int(imediato, 16))[2:].zfill(16)
+            return imediato
+        
+        elif 'b' in imediato:
+            imediato = imediato[2:].zfill(16)
+            return imediato
+        
         else:
-            return bin(int(imediato))[2:].zfill(16)
+            if '-' in imediato:
+                imediato = imediato.replace("-", "")
+                im_negativo = bin(int(imediato))
+                im_positivo =  bin(int(imediato))[2:].zfill(16)
+                im_negativo = bin(int("1111111111111111", 2) - int(im_positivo, 2) + 1)   
+                return str(im_negativo[2:].zfill(16))
+            
+            else:
+                return bin(int(imediato))[2:].zfill(16)
 
     def zero(self):
         return "00000"
@@ -328,7 +343,7 @@ class Translator(Registers):
         """
         offset, registrador = endereço.split('(')
         registrador = registrador.replace(')', '')
-        offset = self.imm(offset)
+        offset = Registers.imm(offset)
         self.base = getattr(self, registrador)()
         return offset
 
@@ -434,7 +449,7 @@ class Translator(Registers):
         opcode = "001000"
         self.rs = getattr(self, registrador[1])()
         self.rt = getattr(self, registrador[0])()
-        self.imediato = self.imm(registrador[2])
+        self.imediato = Registers.imm(registrador[2])
         return hex(int((opcode + self.rs + self.rt + self.imediato), 2))
 
     def andi(self):
@@ -442,7 +457,7 @@ class Translator(Registers):
         opcode = "001100"
         self.rs = getattr(self, registrador[1])()
         self.rt = getattr(self, registrador[0])()
-        self.imediato = self.imm(registrador[2])
+        self.imediato = Registers.imm(registrador[2])
         return hex(int((opcode + self.rs + self.rt + self.imediato), 2))
 
     def ori(self):
@@ -450,7 +465,7 @@ class Translator(Registers):
         opcode = "001101"
         self.rs = getattr(self, registrador[1])()
         self.rt = getattr(self, registrador[0])()
-        self.imediato = self.imm(registrador[2])
+        self.imediato = Registers.imm(registrador[2])
         return hex(int((opcode + self.rs + self.rt + self.imediato), 2))
 
     def xori(self):
@@ -458,7 +473,7 @@ class Translator(Registers):
         opcode = "001110"
         self.rs = getattr(self, registrador[1])()
         self.rt = getattr(self, registrador[0])()
-        self.imediato = self.imm(registrador[2])
+        self.imediato = Registers.imm(registrador[2])
         return hex(int((opcode + self.rs + self.rt + self.imediato), 2))
 
     def addiu(self):
@@ -466,7 +481,7 @@ class Translator(Registers):
         opcode = "001001"
         self.rs = getattr(self, registrador[1])()
         self.rt = getattr(self, registrador[0])()
-        self.imediato = self.imm(registrador[2])
+        self.imediato = Registers.imm(registrador[2])
         return hex(int((opcode + self.rs + self.rt + self.imediato), 2))
 
     def addu(self):
@@ -651,11 +666,10 @@ class Translator(Registers):
 
     def lui(self):
         registrador = self.registradores.split(", ")
-        imediato = int(registrador[1], 16)
         opcode = "001111"
         rs = "00000"
         self.rt = getattr(self, registrador[0])()
-        self.imediato = self.imm(imediato)
+        self.imediato = Registers.imm(registrador[1])
         return hex(int((opcode + rs + self.rt + self.imediato), 2))
 
     def lw(self):
@@ -672,7 +686,10 @@ class Translator(Registers):
         self.rt = getattr(self, registrador[1])()
         rd = "00000"
         shamt = "00000"
-        funct = "00000"
+        funct = "000000"
+        #0111 0001 0100 1011 0000 0000 0000 0000
+        #0111 0001 0100 1011 0000 0000 00 0000
+        #38a58000
         return hex(int((opcode + self.rs + self.rt + rd + shamt + funct), 2))
 
     def mfhi(self):
@@ -797,7 +814,7 @@ class Translator(Registers):
         opcode = "001010"
         self.rs = getattr(self, registrador[1])()
         self.rt = getattr(self, registrador[0])()
-        self._imediato = self.imm(registrador[2])
+        self._imediato = Registers.imm(registrador[2])
         return hex(int((opcode + self.rs + self.rt + self._imediato), 2))
 
     def sltu(self):
@@ -880,14 +897,14 @@ class Translator(Registers):
         opcode = "000001"
         self.rs = getattr(self, registrador[0])()
         tgei = "01000"
-        self.imediato = self.imm(registrador[1])
+        self.imediato = Registers.imm(registrador[1])
         return hex(int((opcode + self.rs + tgei + self.imediato), 2))
 
     def tgeu(self):
         registrador = self.registradores.split(", ")
         opcode = "000000"
         self.rs = getattr(self, registrador[0])()
-        self.imediato = self.imm(registrador[1])
+        self.imediato = Registers.imm(registrador[1])
         code = "0000000000"
         funct = "110001"
         return hex(int((opcode + self.rs + self.rt + code + funct), 2))
@@ -906,11 +923,11 @@ class Translator(Registers):
         opcode = "000001"
         self.rs = getattr(self, registrador[0])()
         tnei = "01110"
-        self.imediato = self.imm(registrador[1])
+        self.imediato = Registers.imm(registrador[1])
         return hex(int((opcode + self.rs + tnei + self.imediato), 2))
 
 
-class Compiler(Translator):
+class Assembler(Translator):
 
     """
         Classe responsável por compilar e traduzir um arquivo de assembly.
@@ -919,7 +936,7 @@ class Compiler(Translator):
 
     def __init__(self, path: str, arquivo_destino: str):
         """
-        Inicializa a classe Compiler.
+        Inicializa a classe Assembler.
 
         Args:
             path (str): O caminho do arquivo a ser compilado.
@@ -1008,319 +1025,345 @@ class Compiler(Translator):
         text: list[str] = self.text
         translated: list[str] = list()
         for linha in text:
-            self.is_label(linha)
-            instrucao, registradores = self.linha[0], self.linha[1]
+            if linha:
+                self.is_label(linha)
+                instrucao, registradores = self.linha[0], self.linha[1]
 
-            match instrucao:
-                case 'add_d':
-                    translator: Translator = Translator(text, instrucao, registradores)
-                    traduction: str = translator.add_d()
-                    translated.append(traduction)
+                match instrucao:
+                    case 'add_d':
+                        translator: Translator = Translator(text, instrucao, registradores)
+                        traduction: str = translator.add_d()
+                        translated.append(traduction)
 
-                case 'add_s':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.add_s()                         
-                    translated.append(traduction) 
+                    case 'add_s':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.add_s()                         
+                        translated.append(traduction) 
 
-                case 'add':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.add()                         
-                    translated.append(traduction) 
+                    case 'add':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.add()                         
+                        translated.append(traduction) 
 
-                case 'sub':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.sub()                         
-                    translated.append(traduction) 
+                    case 'sub':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.sub()                         
+                        translated.append(traduction) 
 
-                case 'and':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator._and()                         
-                    translated.append(traduction) 
+                    case 'and':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator._and()                         
+                        translated.append(traduction) 
 
-                case 'or':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator._or()                         
-                    translated.append(traduction) 
+                    case 'or':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator._or()                         
+                        translated.append(traduction) 
 
-                case 'nor':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.nor()                         
-                    translated.append(traduction) 
+                    case 'nor':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.nor()                         
+                        translated.append(traduction) 
 
-                case 'xor':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.xor()                         
-                    translated.append(traduction) 
+                    case 'xor':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.xor()                         
+                        translated.append(traduction) 
 
-                case 'addi':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.addi()                         
-                    translated.append(traduction) 
+                    case 'addi':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.addi()                         
+                        translated.append(traduction) 
 
-                case 'andi':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.andi()                         
-                    translated.append(traduction) 
+                    case 'andi':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.andi()                         
+                        translated.append(traduction) 
 
-                case 'ori':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.ori()                         
-                    translated.append(traduction) 
+                    case 'ori':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.ori()                         
+                        translated.append(traduction) 
 
-                case 'xori':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.xori()                         
-                    translated.append(traduction) 
+                    case 'xori':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.xori()                         
+                        translated.append(traduction) 
 
-                case 'addiu':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.addiu()                         
-                    translated.append(traduction) 
+                    case 'addiu':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.addiu()                         
+                        translated.append(traduction) 
 
-                case 'addu':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.addu()                         
-                    translated.append(traduction) 
+                    case 'addu':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.addu()                         
+                        translated.append(traduction) 
 
-                case 'subu':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.subu()                         
-                    translated.append(traduction) 
+                    case 'subu':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.subu()                         
+                        translated.append(traduction) 
 
-                case 'beq':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.beq()                         
-                    translated.append(traduction) 
+                    case 'beq':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.beq()                         
+                        translated.append(traduction) 
 
-                case 'bne':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.bne()                         
-                    translated.append(traduction) 
+                    case 'bne':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.bne()                         
+                        translated.append(traduction) 
 
-                case 'bgez':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.bgez()                         
-                    translated.append(traduction) 
+                    case 'bgez':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.bgez()                         
+                        translated.append(traduction) 
 
-                case 'bgezal':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.bgezal()                         
-                    translated.append(traduction) 
+                    case 'bgezal':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.bgezal()                         
+                        translated.append(traduction) 
 
-                case 'c_eq_d':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.c_eq_d()                         
-                    translated.append(traduction) 
+                    case 'c_eq_d':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.c_eq_d()                         
+                        translated.append(traduction) 
 
-                case 'c_eq_s':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.c_eq_s()                         
-                    translated.append(traduction) 
+                    case 'c_eq_s':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.c_eq_s()                         
+                        translated.append(traduction) 
 
-                case 'clo':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.clo()                         
-                    translated.append(traduction) 
+                    case 'clo':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.clo()                         
+                        translated.append(traduction) 
 
-                case 'div':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.div()                         
-                    translated.append(traduction) 
+                    case 'div':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.div()                         
+                        translated.append(traduction) 
 
-                case 'div_d':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.div_d()                         
-                    translated.append(traduction) 
+                    case 'div_d':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.div_d()                         
+                        translated.append(traduction) 
 
-                case 'div_s':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.div_s()                         
-                    translated.append(traduction) 
+                    case 'div_s':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.div_s()                         
+                        translated.append(traduction) 
 
-                case 'j':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.j()                         
-                    translated.append(traduction) 
+                    case 'j':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.j()                         
+                        translated.append(traduction) 
 
-                case 'jal':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.jal()                         
-                    translated.append(traduction) 
+                    case 'jal':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.jal()                         
+                        translated.append(traduction) 
 
-                case 'jalr':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.jalr()                         
-                    translated.append(traduction) 
+                    case 'jalr':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.jalr()                         
+                        translated.append(traduction) 
 
-                case 'jr':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.jr()                         
-                    translated.append(traduction) 
+                    case 'jr':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.jr()                         
+                        translated.append(traduction) 
 
-                case 'lb':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.lb()                         
-                    translated.append(traduction) 
+                    case 'lb':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.lb()                         
+                        translated.append(traduction) 
 
-                case 'lh':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.lh()                         
-                    translated.append(traduction) 
+                    case 'lh':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.lh()                         
+                        translated.append(traduction) 
 
-                case 'lhu':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.lhu()                         
-                    translated.append(traduction) 
+                    case 'lhu':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.lhu()                         
+                        translated.append(traduction) 
 
-                case 'li':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.lui()                         
-                    translated.append(traduction)
-                    reg = registradores.split(', ')[0]
-                    registrador = reg + ', $at' + ', 0'
-                    translator = Translator(text, instrucao, registrador)
-                    traduction = translator.ori()
-                    translated.append(traduction)
+                    case 'li':                    
+                        imediato = registradores.split(', ')[1]
+                        imm = Registers.imm(imediato)
+                        imm = int('0b'+imm,2)
+                        if imm < 65536:
+                            imm = hex(imm)
+                            imm = imm.replace('0x', '')
+                            registradores = registradores.split(', ')[0]+ ', ' + '$zero' +   ', ' + '0x' + imm.zfill(8)
+                            translator = Translator(text, instrucao, registradores)
+                            traduction = translator.addiu()                         
+                            translated.append(traduction)
+                        else:
+                            imm = hex(imm)
+                            imm = imm.replace('0x', '')
+                            tamanho = len(imm)
+                            ori_imm = imm[-4:]
+                            tamanho -= 4
+                            lui_imm = imm[:tamanho]
+                            registradores_ori = str(registradores.split(", ")[0]
+                                                    )+ ", " + "$at" + ", " + "0x" + ori_imm.zfill(8)
+                            registradores_lui = '$at' + ", " + '0x' + lui_imm.zfill(8)
 
-                case 'lui':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.lui()                         
-                    translated.append(traduction) 
+                            translator = Translator(text, instrucao, registradores_lui)
+                            traduction = translator.lui()                         
+                            translated.append(traduction)
+                            translator = Translator(text, instrucao, registradores_ori)
+                            traduction = translator.ori()
+                            translated.append(traduction)
 
-                case 'lw':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.lw()                         
-                    translated.append(traduction) 
+                    case 'lui':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.lui()                         
+                        translated.append(traduction) 
 
-                case 'madd':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.madd()                         
-                    translated.append(traduction) 
+                    case 'lw':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.lw()                         
+                        translated.append(traduction) 
 
-                case 'mfhi':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.mfhi()                         
-                    translated.append(traduction) 
+                    case 'madd':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.madd()                         
+                        translated.append(traduction) 
 
-                case 'mflo':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.mflo()                         
-                    translated.append(traduction) 
+                    case 'mfhi':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.mfhi()                         
+                        translated.append(traduction) 
 
-                case 'movn':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.movn()                         
-                    translated.append(traduction) 
+                    case 'mflo':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.mflo()                         
+                        translated.append(traduction) 
 
-                case 'msubu':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.msubu()                         
-                    translated.append(traduction) 
+                    case 'movn':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.movn()                         
+                        translated.append(traduction) 
 
-                case 'mul':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.mul()                         
-                    translated.append(traduction) 
+                    case 'msubu':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.msubu()                         
+                        translated.append(traduction) 
 
-                case 'mul_d':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.mul_d()                         
-                    translated.append(traduction) 
+                    case 'mul':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.mul()                         
+                        translated.append(traduction) 
 
-                case 'mul_s':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.mul_s()                         
-                    translated.append(traduction) 
+                    case 'mul_d':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.mul_d()                         
+                        translated.append(traduction) 
 
-                case 'mult':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.mult()                         
-                    translated.append(traduction) 
+                    case 'mul_s':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.mul_s()                         
+                        translated.append(traduction) 
 
-                case 'sb':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.sb()                         
-                    translated.append(traduction) 
+                    case 'mult':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.mult()                         
+                        translated.append(traduction) 
 
-                case 'sll':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.sll()                         
-                    translated.append(traduction) 
+                    case 'sb':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.sb()                         
+                        translated.append(traduction) 
 
-                case 'srl':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.srl()                         
-                    translated.append(traduction) 
+                    case 'sll':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.sll()                         
+                        translated.append(traduction) 
 
-                case 'slt':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.slt()                         
-                    translated.append(traduction) 
+                    case 'srl':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.srl()                         
+                        translated.append(traduction) 
 
-                case 'slti':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.slti()                         
-                    translated.append(traduction) 
+                    case 'slt':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.slt()                         
+                        translated.append(traduction) 
 
-                case 'sltu':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.sltu()                         
-                    translated.append(traduction) 
+                    case 'slti':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.slti()                         
+                        translated.append(traduction) 
 
-                case 'sra':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.sra()                         
-                    translated.append(traduction) 
+                    case 'sltu':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.sltu()                         
+                        translated.append(traduction) 
 
-                case 'srav':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.srav()                         
-                    translated.append(traduction) 
+                    case 'sra':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.sra()                         
+                        translated.append(traduction) 
 
-                case 'sub_d':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.sub_d()                         
-                    translated.append(traduction) 
+                    case 'srav':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.srav()                         
+                        translated.append(traduction) 
 
-                case 'sub_s':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.sub_s()                         
-                    translated.append(traduction) 
+                    case 'sub_d':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.sub_d()                         
+                        translated.append(traduction) 
 
-                case 'sw':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.sw()                         
-                    translated.append(traduction) 
+                    case 'sub_s':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.sub_s()                         
+                        translated.append(traduction) 
 
-                case 'teq':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.teq()                         
-                    translated.append(traduction) 
+                    case 'sw':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.sw()                         
+                        translated.append(traduction) 
 
-                case 'tge':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.tge()                         
-                    translated.append(traduction) 
+                    case 'teq':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.teq()                         
+                        translated.append(traduction) 
 
-                case 'tgei':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.tgei()                         
-                    translated.append(traduction) 
+                    case 'tge':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.tge()                         
+                        translated.append(traduction) 
 
-                case 'tgeu':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.tgeu()                         
-                    translated.append(traduction) 
+                    case 'tgei':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.tgei()                         
+                        translated.append(traduction) 
 
-                case 'tne':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.tne()                         
-                    translated.append(traduction) 
+                    case 'tgeu':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.tgeu()                         
+                        translated.append(traduction) 
 
-                case 'tnei':                         
-                    translator = Translator(text, instrucao, registradores)
-                    traduction = translator.tnei()                         
-                    translated.append(traduction) 
+                    case 'tne':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.tne()                         
+                        translated.append(traduction) 
+
+                    case 'tnei':                         
+                        translator = Translator(text, instrucao, registradores)
+                        traduction = translator.tnei()                         
+                        translated.append(traduction) 
+
+                    case _:
+                        if '#'in linha or '%' in linha:
+                            pass
+                        else:
+                            raise Exception('Instrução não suportada')
 
         self.text = translated
         return self.write_mif_text()
@@ -1409,7 +1452,7 @@ class Compiler(Translator):
                 instrucao = traduction[i]
                 instrucao = instrucao.split("x")[1].zfill(8)
                 f.write(str(linha_hexa) + " : " + instrucao + ";\n")
-                contador += 1
+                contador += 4
 
             f.write("\n")
             f.write( "END ;\n")
@@ -1445,18 +1488,25 @@ class Compiler(Translator):
                 linha_hexa= linha_hexa.zfill(8)
                 instrucao = traduction[i]
                 f.write(str(linha_hexa) + " : " + instrucao + ";\n")
-                contador += 1
+                contador += 4
 
             f.write("\n")
             f.write( "END ;\n")
             f.close()
-        return print(f"Caminho do arquivo:    \n\t\t\t" + path_destino +'_data.mif') 
+        return print(f"Caminho do arquivo:\n\t\t\t" + path_destino +'_data.mif') 
   
 
 if __name__ == "__main__":
-    path = input("Digite o caminho do arquivo(path = '/home/usuario/projeto/arquivo.asm'):\t\t")
-    path_destino = input("Digite o nome do arquivo de destino, sem extensao ('saida_teste1'):\t\t\t")
-    #path = "D:/developer/projetos/OAC-MIPS/archives/exemplos/ex_geral.asm"
-    #path_destino = "saida1"
-    compiled = Compiler(path, path_destino)
+    # path = input("Digite o caminho do arquivo(path = '/home/usuario/projeto/arquivo.asm'):\t\t")
+    # path_destino = input("Digite o nome do arquivo de destino, sem extensao ('saida_teste1'):\t\t\t")
+    path = "D:/developer/projetos/OAC-MIPS/archives/exemplos/exemplo_teste.asm"
+    path_destino = "saida1"
+    compiled = Assembler(path, path_destino)
+
+
+#TODO 
+#olhar o xori
+#olhar width e lenght do mif
+#tirar print do caminho destino 
+
 

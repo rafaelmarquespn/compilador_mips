@@ -2,6 +2,7 @@
 a: .word 1, 2, 3
 
 .text
+li $t1, 0x101010
 add $t1, $t2, $t3
 lw $t1, 0($t0)
 lw $t2, 4($t0)
@@ -15,5 +16,6 @@ sw $t5, 4($t0)
 sw $t6, 8($t0)
 lb $t1, 100($t2)
 movn $t1, $t2, $t3
+mtc1 $t1, $t2, $t3
 mul $t1, $t2, $t6
 teq $t1, $t1

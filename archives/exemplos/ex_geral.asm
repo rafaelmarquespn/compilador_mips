@@ -58,14 +58,14 @@ sll $t2, $t3, 10
 srl $t2, $t3, 10
 slt $t1, $t2, $t3
 slti $t1, $t2, -100
-sltu $t1, $t2, -100
+#sltu $t1, $t2, -100
 sra $t2, $t1, 10
 srav $t1, $t2, $t3
 sub.d $f2, $f4, $f6
 sub.s $f0, $f1, $f3
 sw $t0, 120($s3)
 teq $t1, $t2
-tge $t1, $t2
+#tge $t1, $t2
 tgei $t1, -100
 tgeu $t1, -100
 tne $t1, $t2
